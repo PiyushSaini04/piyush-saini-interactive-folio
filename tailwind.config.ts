@@ -13,7 +13,21 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        'inter': ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+      },
       colors: {
+        // Glass system colors
+        'glass-border': 'hsla(var(--glass-border))',
+        'glass': 'hsla(var(--glass))',
+        'glass-hover': 'hsla(var(--glass-hover))',
+        
+        // Text colors
+        'text-primary': 'hsl(var(--text-primary))',
+        'text-secondary': 'hsl(var(--text-secondary))',
+        'text-muted': 'hsl(var(--text-muted))',
+        
+        // Original shadcn colors
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

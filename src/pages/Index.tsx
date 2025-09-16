@@ -1,12 +1,38 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useEffect } from "react";
+import { Navigation } from "../components/Portfolio/Navigation";
+import { Hero } from "../components/Portfolio/Hero";
+import { About } from "../components/Portfolio/About";
+import { Skills } from "../components/Portfolio/Skills";
+import { Projects } from "../components/Portfolio/Projects";
+import { Experience } from "../components/Portfolio/Experience";
+import { Education } from "../components/Portfolio/Education";
+import { Contact } from "../components/Portfolio/Contact";
+import { Footer } from "../components/Portfolio/Footer";
 
 const Index = () => {
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background text-foreground relative">
+      {/* Navigation */}
+      <Navigation />
+      
+      {/* Main Content */}
+      <main className="relative">
+        <Hero />
+        <About />
+        <Skills />
+        <Projects />
+        <Experience />
+        <Education />
+        <Contact />
+      </main>
+      
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };
