@@ -64,10 +64,7 @@ export const About = () => {
                   <span className="text-sm text-gray-400">Location:</span>
                   <span>Jalandhar, Punjab</span>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-400">Role:</span>
-                  <span>Tech Lead - Optimus Club</span>
-                </div>
+                
               </div>
             </div>
           </motion.div>

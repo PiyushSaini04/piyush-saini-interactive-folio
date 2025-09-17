@@ -12,6 +12,7 @@ import {
   CheckCircle,
   AlertCircle
 } from "lucide-react";
+import emailjs from '@emailjs/browser';
 
 export const Contact = () => {
   const ref = useRef(null);
@@ -32,42 +33,46 @@ export const Contact = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate form submission (replace with actual implementation)
-    try {
-      // Here you would typically send the data to your backend
-      // For now, we'll just simulate a delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      setSubmitStatus('success');
-      setFormData({ name: '', email: '', message: '' });
-    } catch (error) {
-      setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
-      
-      // Reset status after 3 seconds
-      setTimeout(() => {
-        setSubmitStatus('idle');
-      }, 3000);
-    }
-  };
+  e.preventDefault();
+  setIsSubmitting(true);
+
+  try {
+    await emailjs.send(
+      "service_o7rujg9", // your EmailJS service ID
+      "template_ki3wyi9", // your EmailJS template ID
+      {
+        from_name: formData.name,
+        from_email: formData.email,
+        message: `Name: ${formData.name}\nEmail: ${formData.email}\nMessage:\n${formData.message}`,
+        to_email: "piyushsaini0404@gmail.com"
+      },
+      "eA_rUJJdfpUYYJwP_" // your EmailJS public key
+    );
+
+    setSubmitStatus('success');
+    setFormData({ name: '', email: '', message: '' });
+  } catch (error) {
+    console.error(error);
+    setSubmitStatus('error');
+  } finally {
+    setIsSubmitting(false);
+    setTimeout(() => setSubmitStatus('idle'), 3000);
+  }
+};
 
   const contactInfo = [
     {
       icon: Mail,
       title: "Email",
-      value: "piyush.saini@example.com",
-      link: "mailto:piyush.saini@example.com",
+      value: "piyushsaini0404@gmail.com",
+      link: "mailto:piyushsaini0404@gmail.com",
       color: "from-red-500 to-pink-500"
     },
     {
       icon: Phone,
       title: "Phone",
-      value: "+91 XXXXX XXXXX",
-      link: "tel:+91XXXXXXXXX",
+      value: "+91 9667169762",
+      link: "tel:+919667169762",
       color: "from-green-500 to-emerald-500"
     },
     {
@@ -95,7 +100,7 @@ export const Contact = () => {
     {
       icon: Mail,
       name: "Email",
-      url: "mailto:piyush.saini@example.com",
+      url: "mailto:piyushsaini0404@gmail.com",
       color: "hover:text-red-400"
     }
   ];
@@ -117,7 +122,7 @@ export const Contact = () => {
         </motion.div>
 
         <div className="grid lg:grid-cols-5 gap-12">
-          {/* Contact Information */}
+          {/* Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
@@ -130,8 +135,7 @@ export const Contact = () => {
                 I'm always interested in hearing about new opportunities, 
                 whether that's a project, job opportunity, or just a chat about technology.
               </p>
-              
-              {/* Contact Info */}
+
               <div className="space-y-4">
                 {contactInfo.map((info, index) => (
                   <motion.a
@@ -157,7 +161,6 @@ export const Contact = () => {
                 ))}
               </div>
 
-              {/* Social Links */}
               <div className="mt-8 pt-6 border-t border-border">
                 <p className="text-sm text-gray-400 mb-4">Follow me on</p>
                 <div className="flex gap-4">
@@ -212,7 +215,7 @@ export const Contact = () => {
                       placeholder="Enter your name"
                     />
                   </div>
-                  
+
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
                       Email Address

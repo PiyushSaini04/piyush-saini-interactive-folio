@@ -8,8 +8,11 @@ import {
   Brain, 
   Cloud, 
   Settings,
-  ChevronRight 
+  ChevronRight
 } from "lucide-react";
+
+// Import React Icons for skill logos
+import { SiHtml5, SiCss3, SiReact, SiNextdotjs, SiTailwindcss, SiC, SiCplusplus, SiNodedotjs, SiJavascript, SiTypescript, SiMongodb, SiMysql, SiPostgresql, SiTensorflow, SiOpencv, SiDocker, SiGooglecloud, SiArduino, SiPostman } from "react-icons/si";
 
 const skillCategories = [
   {
@@ -18,11 +21,11 @@ const skillCategories = [
     icon: Globe,
     color: "from-blue-500 to-cyan-500",
     skills: [
-      { name: "HTML", level: 95 },
-      { name: "CSS", level: 90 },
-      { name: "React.js", level: 88 },
-      { name: "Next.js", level: 85 },
-      { name: "Tailwind CSS", level: 90 },
+      { name: "HTML", icon: SiHtml5 },
+      { name: "CSS", icon: SiCss3 },
+      { name: "React.js", icon: SiReact },
+      { name: "Next.js", icon: SiNextdotjs },
+      { name: "Tailwind CSS", icon: SiTailwindcss },
     ]
   },
   {
@@ -31,10 +34,10 @@ const skillCategories = [
     icon: Code,
     color: "from-green-500 to-emerald-500",
     skills: [
-      { name: "C/C++", level: 85 },
-      { name: "Node.js", level: 80 },
-      { name: "JavaScript", level: 88 },
-      { name: "TypeScript", level: 75 },
+      { name: "C/C++", icon: SiCplusplus },
+      { name: "Node.js", icon: SiNodedotjs },
+      { name: "JavaScript", icon: SiJavascript },
+      { name: "TypeScript", icon: SiTypescript },
     ]
   },
   {
@@ -43,9 +46,9 @@ const skillCategories = [
     icon: Database,
     color: "from-purple-500 to-violet-500",
     skills: [
-      { name: "MongoDB", level: 75 },
-      { name: "MySQL", level: 70 },
-      { name: "PostgreSQL", level: 65 },
+      { name: "MongoDB", icon: SiMongodb },
+      { name: "MySQL", icon: SiMysql },
+      { name: "PostgreSQL", icon: SiPostgresql },
     ]
   },
   {
@@ -54,12 +57,8 @@ const skillCategories = [
     icon: Brain,
     color: "from-pink-500 to-rose-500",
     skills: [
-      { name: "TensorFlow", level: 80 },
-      { name: "MediaPipe", level: 75 },
-      { name: "OpenCV", level: 85 },
-      { name: "YOLOv5", level: 78 },
-      { name: "pandas", level: 82 },
-      { name: "NumPy", level: 85 },
+      { name: "TensorFlow", icon: SiTensorflow },
+      { name: "OpenCV", icon: SiOpencv },
     ]
   },
   {
@@ -68,9 +67,9 @@ const skillCategories = [
     icon: Cloud,
     color: "from-orange-500 to-amber-500",
     skills: [
-      { name: "Git", level: 90 },
-      { name: "Docker", level: 70 },
-      { name: "GCP", level: 65 },
+      { name: "Docker", icon: SiDocker },
+      { name: "GCP", icon: SiGooglecloud },
+      { name: "Git", icon: Code },
     ]
   },
   {
@@ -79,9 +78,9 @@ const skillCategories = [
     icon: Settings,
     color: "from-indigo-500 to-blue-500",
     skills: [
-      { name: "VS Code", level: 95 },
-      { name: "Arduino IDE", level: 80 },
-      { name: "Postman", level: 75 },
+      { name: "VS Code", icon: SiArduino },
+      { name: "Arduino IDE", icon: SiArduino },
+      { name: "Postman", icon: SiPostman },
     ]
   }
 ];
@@ -105,7 +104,7 @@ export const Skills = () => {
         >
           <h2 className="section-title">Skills & Technologies</h2>
           <p className="section-subtitle">
-            A comprehensive overview of my technical expertise and proficiency levels
+            A comprehensive overview of my technical expertise
           </p>
         </motion.div>
 
@@ -152,7 +151,7 @@ export const Skills = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="lg:col-span-2"
           >
-            <div className="card-glass">
+            <div className="card-glass p-6">
               <div className="flex items-center gap-3 mb-6">
                 {skillCategories.map(category => (
                   category.id === activeCategory && (
@@ -166,34 +165,16 @@ export const Skills = () => {
                 ))}
               </div>
 
-              <div className="space-y-6">
-                {activeSkills.map((skill, index) => (
-                  <motion.div
-                    key={`${activeCategory}-${skill.name}`}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className="group"
-                  >
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="font-medium text-gray-300 group-hover:text-white transition-colors">
-                        {skill.name}
-                      </span>
-                      <span className="text-sm text-gray-400 group-hover:text-primary transition-colors">
-                        {skill.level}%
-                      </span>
+              <div className="flex flex-wrap gap-4">
+                {activeSkills.map(skill => {
+                  const Icon = skill.icon;
+                  return (
+                    <div key={skill.name} className="flex items-center gap-2 p-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors cursor-default">
+                      <Icon className="w-5 h-5 text-white" />
+                      <span className="text-white font-medium">{skill.name}</span>
                     </div>
-                    
-                    <div className="w-full bg-gray-700 rounded-full h-2 overflow-hidden">
-                      <motion.div
-                        className="h-full bg-gradient-to-r from-primary to-secondary rounded-full"
-                        initial={{ width: 0 }}
-                        animate={isInView ? { width: `${skill.level}%` } : { width: 0 }}
-                        transition={{ duration: 1, delay: 0.5 + index * 0.1, ease: "easeOut" }}
-                      />
-                    </div>
-                  </motion.div>
-                ))}
+                  )
+                })}
               </div>
             </div>
           </motion.div>

@@ -19,16 +19,15 @@ export const Navigation = () => {
   const [activeSection, setActiveSection] = useState("home");
   const { theme, setTheme } = useTheme();
 
+  // Hide/show navbar on scroll
   useEffect(() => {
     const controlNavbar = () => {
       const currentScrollY = window.scrollY;
-      
       if (currentScrollY < lastScrollY || currentScrollY < 100) {
         setIsVisible(true);
       } else {
         setIsVisible(false);
       }
-      
       setLastScrollY(currentScrollY);
     };
 
@@ -36,6 +35,7 @@ export const Navigation = () => {
     return () => window.removeEventListener("scroll", controlNavbar);
   }, [lastScrollY]);
 
+  // Track active section
   useEffect(() => {
     const handleScroll = () => {
       const sections = navItems.map(item => item.href.substring(1));
@@ -47,7 +47,7 @@ export const Navigation = () => {
         }
         return false;
       });
-      
+
       if (currentSection) {
         setActiveSection(currentSection);
       }
@@ -86,9 +86,9 @@ export const Navigation = () => {
       initial={{ y: -100 }}
       animate={{ y: isVisible ? 0 : -100 }}
       transition={{ duration: 0.3 }}
-      className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50"
+className="fixed top-4 inset-x-0 z-50 flex items-center justify-center"
     >
-      <div className="nav-glass flex items-center space-x-1">
+      <div className="nav-glass flex items-center space-x-1 bg-gray-900/50 backdrop-blur-md p-2 rounded-full">
         {navItems.map((item) => (
           <button
             key={item.name}
@@ -111,9 +111,9 @@ export const Navigation = () => {
             </span>
           </button>
         ))}
-        
+
         <div className="w-px h-6 bg-border mx-2" />
-        
+
         <button
           onClick={cycleTheme}
           className="p-2 rounded-full text-gray-300 hover:text-white transition-colors duration-300"
