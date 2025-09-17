@@ -1,4 +1,4 @@
-import { useEffect, useRef, FC } from 'react';
+import { useEffect, useRef, FC, useState } from 'react';
 import * as THREE from 'three';
 import { BloomEffect, EffectComposer, EffectPass, RenderPass, SMAAEffect, SMAAPreset } from 'postprocessing';
 
@@ -1217,10 +1217,32 @@ class App {
 }
 
 const Hyperspeed: FC<HyperspeedProps> = ({ effectOptions = {} }) => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const mobileOptions: Partial<HyperspeedOptions> = isMobile ? {
+    totalSideLightSticks: 10, // Reduce number of sticks
+    lightPairsPerRoadWay: 10, // Reduce number of car lights
+    lightStickWidth: [0.08, 0.3], // Smaller stick width
+    lightStickHeight: [0.8, 1.2], // Shorter stick height
+    carLightsLength: [400 * 0.02, 400 * 0.1], // Shorter car lights
+    carLightsRadius: [0.03, 0.08], // Smaller car lights radius
+    fov: 70, // Slightly reduced FOV for less tunnel vision
+  } : {};
+
   const mergedOptions: HyperspeedOptions = {
     ...defaultOptions,
-    ...effectOptions
+    ...effectOptions,
+    ...mobileOptions, // Apply mobile specific options
   };
+
   const hyperspeed = useRef<HTMLDivElement>(null);
   const appRef = useRef<App | null>(null);
 

@@ -27,19 +27,19 @@ export const Footer = () => {
   ];
 
   return (
-    <footer className="relative py-12 px-4 border-t border-border">
+    <footer className="relative py-8 px-4 sm:py-10 md:py-12 border-t border-border">
       <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="flex flex-col items-center justify-between gap-4 md:flex-row md:gap-6">
           {/* Left side - Copyright */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="flex items-center gap-2 text-gray-300"
+            className="flex items-center gap-1.5 sm:gap-2 text-gray-300 text-sm sm:text-base text-center"
           >
             <span>Made with</span>
-            <Heart className="w-4 h-4 text-red-500 animate-pulse" />
+            <Heart className="w-3 h-3 sm:w-4 sm:h-4 text-red-500 animate-pulse" />
             <span>by</span>
             <span className="font-semibold gradient-text">Piyush Saini</span>
             <span>© {currentYear}</span>
@@ -51,7 +51,7 @@ export const Footer = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="flex items-center gap-4"
+            className="flex items-center gap-3 sm:gap-4"
           >
             {socialLinks.map((link, index) => (
               <motion.a
@@ -61,10 +61,10 @@ export const Footer = () => {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                className="p-2 rounded-full bg-glass border border-border hover:bg-glass-hover transition-all duration-300 text-gray-400 hover:text-white group"
+                className="p-1.5 sm:p-2 rounded-full bg-glass border border-border hover:bg-glass-hover transition-all duration-300 text-gray-400 hover:text-white group"
                 aria-label={link.name}
               >
-                <link.icon className="w-4 h-4" />
+                <link.icon className="w-3 h-3 sm:w-4 sm:h-4" />
               </motion.a>
             ))}
           </motion.div>
@@ -76,10 +76,10 @@ export const Footer = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
             onClick={scrollToTop}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-glass border border-border hover:bg-glass-hover transition-all duration-300 text-gray-300 hover:text-white group"
+            className="flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-glass border border-border hover:bg-glass-hover transition-all duration-300 text-gray-300 hover:text-white group"
           >
-            <span className="text-sm font-medium">Back to Top</span>
-            <ArrowUp className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
+            <span className="text-xs sm:text-sm font-medium">Back to Top</span>
+            <ArrowUp className="w-3 h-3 sm:w-4 sm:h-4 group-hover:-translate-y-0.5 transition-transform" />
           </motion.button>
         </div>
 
@@ -89,9 +89,9 @@ export const Footer = () => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-center mt-8 pt-6 border-t border-border"
+          className="text-center mt-6 pt-4 border-t border-border"
         >
-          <p className="text-sm text-gray-400">
+          <p className="text-xs sm:text-sm text-gray-400">
             Built with React, TypeScript, Tailwind CSS, and Framer Motion
           </p>
         </motion.div>

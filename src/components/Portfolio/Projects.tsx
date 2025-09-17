@@ -61,22 +61,22 @@ export const Projects = () => {
   };
 
   return (
-    <section id="projects" className="py-20 px-4 relative">
+    <section id="projects" className="py-16 px-4 sm:px-6 md:py-20 relative">
       <div className="max-w-7xl mx-auto">
         <motion.div
           ref={ref}
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-12 md:mb-16"
         >
-          <h2 className="section-title">Projects Showcase</h2>
-          <p className="section-subtitle">
+          <h2 className="section-title text-3xl sm:text-4xl md:text-5xl">Projects Showcase</h2>
+          <p className="section-subtitle text-base sm:text-lg">
             A collection of my featured work showcasing technical expertise and innovation
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
           {projects.map((project, index) => (
             <motion.div
               key={project.id}
@@ -86,7 +86,7 @@ export const Projects = () => {
               className="card-project group"
             >
               {/* Project Image */}
-              <div className="relative overflow-hidden rounded-t-xl mb-6 -m-6 mb-6">
+              <div className="relative overflow-hidden rounded-t-xl mb-6 -m-6">
                 <img
                   src={project.image}
                   alt={project.title}
@@ -116,14 +116,14 @@ export const Projects = () => {
               </div>
 
               {/* Project Content */}
-              <div className="space-y-4">
+              <div className="space-y-4 p-6">
                 <div className="flex items-start justify-between">
-                  <h3 className="text-xl font-bold group-hover:gradient-text transition-all">
+                  <h3 className="text-xl sm:text-2xl font-bold group-hover:gradient-text transition-all">
                     {project.title}
                   </h3>
                 </div>
 
-                <p className="text-gray-300 leading-relaxed">
+                <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
                   {project.description}
                 </p>
 
@@ -153,7 +153,7 @@ export const Projects = () => {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex gap-3 pt-4">
+                <div className="flex flex-col sm:flex-row gap-3 pt-4">
                   <a
                     href={project.github}
                     target="_blank"

@@ -28,7 +28,7 @@ export const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-lg text-gray-300 font-medium"
+            className="text-lg sm:text-xl text-gray-300 font-medium"
           >
             Hi, I'm
           </motion.p>
@@ -38,7 +38,7 @@ export const Hero = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-bold gradient-text mb-6 pb-4"
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold gradient-text mb-6 pb-4"
           >
             Piyush Saini
           </motion.h1>
@@ -48,7 +48,7 @@ export const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
-            className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed"
+            className="text-base sm:text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed"
           >
             Frontend & Full-Stack Developer passionate about building{" "}
             <span className="gradient-text font-semibold">scalable</span> and{" "}
@@ -60,11 +60,11 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center mt-8"
+            className="flex flex-col sm:flex-row gap-4 justify-center mt-8 px-4"
           >
             <button
               onClick={scrollToContact}
-              className="btn-primary flex items-center gap-2 justify-center"
+              className="btn-primary flex items-center gap-2 justify-center w-full sm:w-auto"
             >
               <Phone className="w-4 h-4" />
               Hire Me
@@ -72,7 +72,7 @@ export const Hero = () => {
             
             <button
               onClick={downloadResume}
-              className="btn-secondary flex items-center gap-2 justify-center"
+              className="btn-secondary flex items-center gap-2 justify-center w-full sm:w-auto"
             >
               <Download className="w-4 h-4" />
               Download Resume
@@ -80,7 +80,7 @@ export const Hero = () => {
             
             <button
               onClick={scrollToContact}
-              className="btn-ghost flex items-center gap-2 justify-center"
+              className="btn-ghost flex items-center gap-2 justify-center w-full sm:w-auto"
             >
               <Mail className="w-4 h-4" />
               Contact Me
@@ -92,31 +92,31 @@ export const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.0 }}
-            className="flex justify-center gap-6 mt-12"
+            className="flex justify-center gap-4 sm:gap-6 mt-12"
           >
             <a
               href="https://linkedin.com/in/piyush-saini"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 rounded-full bg-glass border border-glass-border hover:bg-glass-hover transition-all duration-300 hover:scale-110 group"
+              className="p-2 sm:p-3 rounded-full bg-glass border border-glass-border hover:bg-glass-hover transition-all duration-300 hover:scale-110 group"
             >
-              <Linkedin className="w-5 h-5 text-gray-300 group-hover:text-white transition-colors" />
+              <Linkedin className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300 group-hover:text-white transition-colors" />
             </a>
             
             <a
               href="https://github.com/piyush-saini"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 rounded-full bg-glass border border-glass-border hover:bg-glass-hover transition-all duration-300 hover:scale-110 group"
+              className="p-2 sm:p-3 rounded-full bg-glass border border-glass-border hover:bg-glass-hover transition-all duration-300 hover:scale-110 group"
             >
-              <Github className="w-5 h-5 text-gray-300 group-hover:text-white transition-colors" />
+              <Github className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300 group-hover:text-white transition-colors" />
             </a>
             
             <a
               href="mailto:piyush.saini@example.com"
-              className="p-3 rounded-full bg-glass border border-glass-border hover:bg-glass-hover transition-all duration-300 hover:scale-110 group"
+              className="p-2 sm:p-3 rounded-full bg-glass border border-glass-border hover:bg-glass-hover transition-all duration-300 hover:scale-110 group"
             >
-              <Mail className="w-5 h-5 text-gray-300 group-hover:text-white transition-colors" />
+              <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300 group-hover:text-white transition-colors" />
             </a>
           </motion.div>
           

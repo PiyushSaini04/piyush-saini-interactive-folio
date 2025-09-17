@@ -93,17 +93,17 @@ export const Skills = () => {
   const activeSkills = skillCategories.find(cat => cat.id === activeCategory)?.skills || [];
 
   return (
-    <section id="skills" className="py-20 px-4 relative">
+    <section id="skills" className="py-16 px-4 sm:px-6 md:py-20 relative">
       <div className="max-w-6xl mx-auto">
         <motion.div
           ref={ref}
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-12 md:mb-16"
         >
-          <h2 className="section-title">Skills & Technologies</h2>
-          <p className="section-subtitle">
+          <h2 className="section-title text-3xl sm:text-4xl md:text-5xl">Skills & Technologies</h2>
+          <p className="section-subtitle text-base sm:text-lg">
             A comprehensive overview of my technical expertise
           </p>
         </motion.div>
@@ -114,7 +114,7 @@ export const Skills = () => {
             initial={{ opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="lg:col-span-1"
+            className="lg:col-span-1 mb-8 lg:mb-0"
           >
             <div className="space-y-3">
               {skillCategories.map((category, index) => (
@@ -124,7 +124,7 @@ export const Skills = () => {
                   animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                   transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
                   onClick={() => setActiveCategory(category.id)}
-                  className={`w-full p-4 rounded-xl border transition-all duration-300 text-left flex items-center gap-3 group ${
+                  className={`w-full p-4 rounded-xl border transition-all duration-300 text-left flex items-center gap-3 group text-base sm:text-lg ${
                     activeCategory === category.id
                       ? "bg-gradient-to-r from-primary/20 to-secondary/20 border-primary"
                       : "card-glass hover:border-primary/50"
@@ -134,7 +134,7 @@ export const Skills = () => {
                     <category.icon className="w-4 h-4 text-white" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-sm">{category.name}</h3>
+                    <h3 className="font-semibold text-sm sm:text-base">{category.name}</h3>
                   </div>
                   <ChevronRight className={`w-4 h-4 transition-transform ${
                     activeCategory === category.id ? "rotate-90 text-primary" : "text-gray-400"
@@ -151,26 +151,26 @@ export const Skills = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="lg:col-span-2"
           >
-            <div className="card-glass p-6">
-              <div className="flex items-center gap-3 mb-6">
+            <div className="card-glass p-6 sm:p-8">
+              <div className="flex items-center gap-3 mb-4 sm:mb-6">
                 {skillCategories.map(category => (
                   category.id === activeCategory && (
-                    <div key={category.id} className="flex items-center gap-3">
-                      <div className={`p-3 rounded-xl bg-gradient-to-r ${category.color}`}>
-                        <category.icon className="w-6 h-6 text-white" />
+                    <div key={category.id} className="flex items-center gap-2 sm:gap-3">
+                      <div className={`p-2 sm:p-3 rounded-lg bg-gradient-to-r ${category.color}`}>
+                        <category.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                       </div>
-                      <h3 className="text-2xl font-bold gradient-text">{category.name}</h3>
+                      <h3 className="text-xl sm:text-2xl font-bold gradient-text">{category.name}</h3>
                     </div>
                   )
                 ))}
               </div>
 
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-3 sm:gap-4">
                 {activeSkills.map(skill => {
                   const Icon = skill.icon;
                   return (
-                    <div key={skill.name} className="flex items-center gap-2 p-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors cursor-default">
-                      <Icon className="w-5 h-5 text-white" />
+                    <div key={skill.name} className="flex items-center gap-2 p-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors cursor-default text-sm sm:text-base">
+                      <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                       <span className="text-white font-medium">{skill.name}</span>
                     </div>
                   )

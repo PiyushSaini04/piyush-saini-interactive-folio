@@ -71,22 +71,22 @@ export const Education = () => {
   const isInView = useInView(ref, { once: true });
 
   return (
-    <section id="education" className="py-20 px-4 relative">
+    <section id="education" className="py-16 px-4 sm:px-6 md:py-20 relative">
       <div className="max-w-6xl mx-auto">
         <motion.div
           ref={ref}
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-12 md:mb-16"
         >
-          <h2 className="section-title">My Academic Journey</h2>
-          <p className="section-subtitle">
+          <h2 className="section-title text-3xl sm:text-4xl md:text-5xl">My Academic Journey</h2>
+          <p className="section-subtitle text-base sm:text-lg">
             Educational background and continuous learning achievements
           </p>
         </motion.div>
 
-        <div className="space-y-12">
+        <div className="space-y-10 md:space-y-12">
           {/* Education Timeline */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -95,7 +95,7 @@ export const Education = () => {
           >
             <div className="relative">
               {/* Timeline Line */}
-              <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-secondary to-accent hidden md:block" />
+              <div className="absolute left-4 md:left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-secondary to-accent hidden md:block" />
               
               {educationData.map((edu, index) => (
                 <motion.div
@@ -103,72 +103,72 @@ export const Education = () => {
                   initial={{ opacity: 0, x: -50 }}
                   animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
                   transition={{ duration: 0.8, delay: 0.4 + index * 0.2 }}
-                  className="relative pl-0 md:pl-20 mb-12 last:mb-0"
+                  className="relative pl-0 md:pl-20 mb-8 md:mb-12 last:mb-0"
                 >
                   {/* Timeline Dot */}
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={isInView ? { scale: 1 } : { scale: 0 }}
                     transition={{ duration: 0.5, delay: 0.6 + index * 0.2 }}
-                    className={`absolute left-4 top-8 w-8 h-8 rounded-full bg-gradient-to-r ${edu.color} border-4 border-background hidden md:flex items-center justify-center shadow-lg`}
+                    className={`absolute left-2 md:left-4 top-4 md:top-8 w-6 h-6 md:w-8 md:h-8 rounded-full bg-gradient-to-r ${edu.color} border-2 md:border-4 border-background hidden md:flex items-center justify-center shadow-lg`}
                   >
-                    <edu.icon className="w-4 h-4 text-white" />
+                    <edu.icon className="w-3 h-3 md:w-4 md:h-4 text-white" />
                   </motion.div>
                   
-                  <div className="card-glass group hover:bg-gradient-to-br hover:from-primary/10 hover:to-secondary/10">
-                    <div className="flex items-start gap-4 mb-6">
-                      <div className={`md:hidden p-3 rounded-xl bg-gradient-to-r ${edu.color} group-hover:scale-110 transition-transform`}>
-                        <edu.icon className="w-6 h-6 text-white" />
+                  <div className="card-glass group hover:bg-gradient-to-br hover:from-primary/10 hover:to-secondary/10 p-5 sm:p-6">
+                    <div className="flex items-start gap-3 sm:gap-4 mb-3 sm:mb-4">
+                      <div className={`md:hidden p-2 sm:p-3 rounded-xl bg-gradient-to-r ${edu.color} group-hover:scale-110 transition-transform`}>
+                        <edu.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                       </div>
                       
                       <div className="flex-1">
-                        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-3">
-                          <h3 className="text-xl font-bold gradient-text mb-1 lg:mb-0">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
+                          <h3 className="text-lg sm:text-xl font-bold gradient-text mb-1 sm:mb-0">
                             {edu.degree}
                           </h3>
-                          <div className="flex items-center gap-3">
-                            <span className={`px-3 py-1 text-xs font-medium rounded-full ${
+                          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                            <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${
                               edu.status === "Current" 
                                 ? "bg-green-500/20 text-green-400 border border-green-500/30" 
                                 : "bg-blue-500/20 text-blue-400 border border-blue-500/30"
                             }`}>
                               {edu.status}
                             </span>
-                            <span className="text-lg font-bold text-primary">
+                            <span className="text-base sm:text-lg font-bold text-primary">
                               {edu.cgpa}
                             </span>
                           </div>
                         </div>
                         
-                        <div className="flex flex-col md:flex-row gap-2 text-sm text-gray-300 mb-3">
+                        <div className="flex flex-col sm:flex-row gap-1 sm:gap-2 text-xs sm:text-sm text-gray-300 mb-2 sm:mb-3">
                           <div className="flex items-center gap-1">
-                            <GraduationCap className="w-4 h-4 text-primary" />
+                            <GraduationCap className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
                             <span className="font-medium">{edu.institution}</span>
                           </div>
-                          <span className="hidden md:inline">•</span>
+                          <span className="hidden sm:inline">•</span>
                           <div className="flex items-center gap-1">
-                            <MapPin className="w-4 h-4 text-secondary" />
+                            <MapPin className="w-3 h-3 sm:w-4 sm:h-4 text-secondary" />
                             <span>{edu.location}</span>
                           </div>
-                          <span className="hidden md:inline">•</span>
+                          <span className="hidden sm:inline">•</span>
                           <div className="flex items-center gap-1">
-                            <Calendar className="w-4 h-4 text-accent" />
+                            <Calendar className="w-3 h-3 sm:w-4 sm:h-4 text-accent" />
                             <span>{edu.period}</span>
                           </div>
                         </div>
                         
-                        <p className="text-gray-300 leading-relaxed mb-4">
+                        <p className="text-sm text-gray-300 leading-relaxed mb-3 sm:mb-4">
                           {edu.description}
                         </p>
                       </div>
                     </div>
 
                     {/* Highlights */}
-                    <div className="grid md:grid-cols-2 gap-2">
+                    <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-1 sm:gap-2">
                       {edu.highlights.map((highlight, idx) => (
                         <div key={idx} className="flex items-start gap-2">
-                          <div className="w-1.5 h-1.5 bg-gradient-to-r from-primary to-secondary rounded-full mt-2 flex-shrink-0" />
-                          <span className="text-sm text-gray-300">{highlight}</span>
+                          <div className="w-1 h-1 bg-gradient-to-r from-primary to-secondary rounded-full mt-2 flex-shrink-0" />
+                          <span className="text-xs sm:text-sm text-gray-300">{highlight}</span>
                         </div>
                       ))}
                     </div>
@@ -184,36 +184,36 @@ export const Education = () => {
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            <h3 className="text-3xl font-bold mb-8 gradient-text text-center">
+            <h3 className="text-2xl sm:text-3xl font-bold mb-6 md:mb-8 gradient-text text-center">
               Certifications & Achievements
             </h3>
             
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
               {certifications.map((cert, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.5, delay: 1.0 + index * 0.1 }}
-                  className="card-glass group hover:bg-gradient-to-br hover:from-primary/10 hover:to-secondary/10 text-center"
+                  className="card-glass group hover:bg-gradient-to-br hover:from-primary/10 hover:to-secondary/10 text-center p-5 sm:p-6"
                 >
-                  <div className={`w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r ${cert.color} flex items-center justify-center group-hover:scale-110 transition-transform`}>
-                    <Award className="w-8 h-8 text-white" />
+                  <div className={`w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 rounded-full bg-gradient-to-r ${cert.color} flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                    <Award className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
                   </div>
                   
-                  <h4 className="font-bold text-lg mb-2 group-hover:gradient-text transition-all">
+                  <h4 className="font-bold text-base sm:text-lg mb-1 sm:mb-2 group-hover:gradient-text transition-all">
                     {cert.title}
                   </h4>
                   
-                  <p className="text-primary font-medium mb-2">
+                  <p className="text-primary font-medium mb-1 sm:mb-2 text-sm sm:text-base">
                     {cert.provider}
                   </p>
                   
-                  <p className="text-sm text-gray-400 mb-3">
+                  <p className="text-xs sm:text-sm text-gray-400 mb-2 sm:mb-3">
                     {cert.date}
                   </p>
                   
-                  <p className="text-sm text-gray-300">
+                  <p className="text-xs sm:text-sm text-gray-300">
                     {cert.description}
                   </p>
                 </motion.div>
