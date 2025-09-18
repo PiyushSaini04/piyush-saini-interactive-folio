@@ -62,13 +62,7 @@ export const Hero = () => {
             transition={{ delay: 0.8 }}
             className="flex flex-col sm:flex-row gap-4 justify-center mt-8 px-4"
           >
-            <button
-              onClick={scrollToContact}
-              className="btn-primary flex items-center gap-2 justify-center w-full sm:w-auto"
-            >
-              <Phone className="w-4 h-4" />
-              Hire Me
-            </button>
+            
             
             <button
               onClick={downloadResume}
@@ -80,7 +74,7 @@ export const Hero = () => {
             
             <button
               onClick={scrollToContact}
-              className="btn-ghost flex items-center gap-2 justify-center w-full sm:w-auto"
+              className="btn-primary flex items-center gap-2 justify-center w-full sm:w-auto"
             >
               <Mail className="w-4 h-4" />
               Contact Me
@@ -95,7 +89,7 @@ export const Hero = () => {
             className="flex justify-center gap-4 sm:gap-6 mt-12"
           >
             <a
-              href="https://linkedin.com/in/piyush-saini"
+              href="https://www.linkedin.com/in/piyushsaini2004/"
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 sm:p-3 rounded-full bg-glass border border-glass-border hover:bg-glass-hover transition-all duration-300 hover:scale-110 group"
@@ -104,7 +98,7 @@ export const Hero = () => {
             </a>
             
             <a
-              href="https://github.com/piyush-saini"
+              href="https://github.com/PiyushSaini04"
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 sm:p-3 rounded-full bg-glass border border-glass-border hover:bg-glass-hover transition-all duration-300 hover:scale-110 group"
@@ -112,12 +106,7 @@ export const Hero = () => {
               <Github className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300 group-hover:text-white transition-colors" />
             </a>
             
-            <a
-              href="mailto:piyush.saini@example.com"
-              className="p-2 sm:p-3 rounded-full bg-glass border border-glass-border hover:bg-glass-hover transition-all duration-300 hover:scale-110 group"
-            >
-              <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300 group-hover:text-white transition-colors" />
-            </a>
+            
           </motion.div>
           
           {/* Scroll Indicator */}

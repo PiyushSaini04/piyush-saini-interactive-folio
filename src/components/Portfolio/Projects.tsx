@@ -2,19 +2,9 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Github, ExternalLink, Zap, Eye, Brain } from "lucide-react";
+import optimus from "../../assest/optimus_image.png";
 
 const projects = [
-  {
-    id: 1,
-    title: "Solar Max Tracker",
-    description: "Arduino-based solar panel tracking system that automatically follows the sun's position to maximize energy efficiency.",
-    image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600&h=400&fit=crop",
-    tags: ["Arduino UNO", "IoT", "Hardware", "C++"],
-    features: ["30% Efficiency Boost", "Automatic Tracking", "Weather Resistant"],
-    github: "https://github.com/piyush-saini/solar-tracker",
-    demo: "#",
-    color: "from-yellow-500 to-orange-500"
-  },
   {
     id: 2,
     title: "Drone vs. Bird Detection",
@@ -39,14 +29,14 @@ const projects = [
   },
   {
     id: 4,
-    title: "Optimus Club Website",
-    description: "Official website for university tech club built with modern web technologies and responsive design.",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop",
-    tags: ["React.js", "Next.js", "Node.js", "MongoDB"],
-    features: ["300+ Events Managed", "5+ Developers", "Modern UI/UX"],
-    github: "https://github.com/piyush-saini/optimus-club",
-    demo: "#",
-    color: "from-purple-500 to-pink-500"
+    title: "Optimus Website",
+    description: "A centralized event registration platform for university organizations, allowing students to explore, register, and manage participation in various events. Built with modern web technologies, the website offers a seamless and responsive user experience.",
+    image: optimus,
+    tags: ["React.js", "Next.js", "Node.js", "Typescript", "Tailwind CSS"],
+    features: ["10+ Events Managed", "500+ particapant" ,"Modern UI/UX"],
+    github: "https://github.com/PiyushSaini04/optimus-event-flow",
+    demo: "https://www.optimusorgz.xyz/",
+    color: "from-purple-500 to-white-200"
   }
 ];
 
@@ -86,12 +76,14 @@ export const Projects = () => {
               className="card-project group"
             >
               {/* Project Image */}
-              <div className="relative overflow-hidden rounded-t-xl mb-6 -m-6">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
-                />
+              <div className="relative overflow-hidden rounded-t-xl mb-6 -m-6 center">
+                <div className="w-full h-60 overflow-hidden rounded-t-xl">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                </div>
                 <div className={`absolute inset-0 bg-gradient-to-r ${project.color} opacity-20 group-hover:opacity-30 transition-opacity`} />
                 
                 {/* Overlay Actions */}

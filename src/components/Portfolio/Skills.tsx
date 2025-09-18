@@ -102,7 +102,7 @@ export const Skills = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-12 md:mb-16"
         >
-          <h2 className="section-title text-3xl sm:text-4xl md:text-5xl">Skills & Technologies</h2>
+          <h2 className="section-title text-3xl sm:text-4xl md:text-5xl pb-4">Skills & Technologies</h2>
           <p className="section-subtitle text-base sm:text-lg">
             A comprehensive overview of my technical expertise
           </p>
