@@ -159,14 +159,6 @@ export const Navigation = () => {
           ))}
 
           <div className="w-px h-6 bg-border mx-2" />
-
-          <button
-            onClick={cycleTheme}
-            className="p-2 rounded-full text-gray-300 hover:text-white transition-colors duration-300"
-            title="Toggle theme"
-          >
-            {getThemeIcon()}
-          </button>
         </div>
 
         {/* Mobile Menu */}
