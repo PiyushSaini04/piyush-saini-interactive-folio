@@ -18,7 +18,7 @@ export const Navigation = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [activeSection, setActiveSection] = useState("home");
   const { theme, setTheme } = useTheme();
-  const [isOpen, setIsOpen] = useState(false); // State for mobile menu
+  const [isOpen, setIsOpen] = useState(false); // State for mobile dropdown
 
   // Hide/show navbar on scroll
   useEffect(() => {
@@ -39,8 +39,8 @@ export const Navigation = () => {
   // Track active section
   useEffect(() => {
     const handleScroll = () => {
-      const sections = navItems.map(item => item.href.substring(1));
-      const currentSection = sections.find(section => {
+      const sections = navItems.map((item) => item.href.substring(1));
+      const currentSection = sections.find((section) => {
         const element = document.getElementById(section);
         if (element) {
           const rect = element.getBoundingClientRect();
@@ -63,7 +63,7 @@ export const Navigation = () => {
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
-    setIsOpen(false); // Close mobile menu on link click
+    setIsOpen(false); // Close mobile dropdown on click
   };
 
   const getThemeIcon = () => {
@@ -90,47 +90,35 @@ export const Navigation = () => {
       transition={{ duration: 0.3 }}
       className="fixed top-4 inset-x-0 z-50 flex items-center justify-center md:px-0 px-4"
     >
-      <div className="nav-glass flex items-center bg-gray-900/50 backdrop-blur-md p-2 rounded-full relative md:static">
-        {/* Hamburger menu for mobile */}
+      <div className="nav-glass flex items-center bg-gray-900/50 backdrop-blur-md p-2 rounded-full relative md:static w-full md:w-auto justify-between">
+        {/* Mobile Top Bar */}
         <div className="md:hidden flex items-center justify-between w-full">
+          {/* Active section name button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="p-2 rounded-full text-gray-300 hover:text-white transition-colors duration-300"
-            aria-label="Toggle navigation"
+            className="flex items-center justify-between w-full px-4 py-2 text-gray-200 hover:text-white rounded-md"
           >
+            <span className="text-lg font-medium capitalize">
+              {navItems.find((item) => item.href.substring(1) === activeSection)
+                ?.name || "Menu"}
+            </span>
             <svg
-              className="w-6 h-6"
+              className={`w-5 h-5 ml-2 transition-transform ${
+                isOpen ? "rotate-180" : "rotate-0"
+              }`}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
-              {isOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              )}
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
             </svg>
           </button>
-          <div className="flex items-center space-x-1">
-             <button
-              onClick={cycleTheme}
-              className="p-2 rounded-full text-gray-300 hover:text-white transition-colors duration-300"
-              title="Toggle theme"
-            >
-              {getThemeIcon()}
-            </button>
-          </div>
         </div>
 
         {/* Desktop Navigation */}
@@ -161,13 +149,13 @@ export const Navigation = () => {
           <div className="w-px h-6 bg-border mx-2" />
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Dropdown */}
         <motion.div
           initial={false}
           animate={isOpen ? "open" : "closed"}
           variants={{
             open: { opacity: 1, y: 0 },
-            closed: { opacity: 0, y: "-100%" },
+            closed: { opacity: 0, y: "-10%" },
           }}
           transition={{ duration: 0.3 }}
           className={`absolute top-full mt-2 left-0 right-0 bg-gray-900/90 backdrop-blur-md rounded-lg p-4 md:hidden ${

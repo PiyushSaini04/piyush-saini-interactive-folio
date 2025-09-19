@@ -1,18 +1,12 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
+import { Code, Database, Globe, Brain, Cloud, Settings, ChevronRight } from "lucide-react";
 import { 
-  Code, 
-  Database, 
-  Globe, 
-  Brain, 
-  Cloud, 
-  Settings,
-  ChevronRight
-} from "lucide-react";
-
-// Import React Icons for skill logos
-import { SiHtml5, SiCss3, SiReact, SiNextdotjs, SiTailwindcss, SiC, SiCplusplus, SiNodedotjs, SiJavascript, SiTypescript, SiMongodb, SiMysql, SiPostgresql, SiTensorflow, SiOpencv, SiDocker, SiGooglecloud, SiArduino, SiPostman } from "react-icons/si";
+  SiHtml5, SiCss3, SiReact, SiNextdotjs, SiTailwindcss, SiCplusplus, SiNodedotjs, 
+  SiJavascript, SiTypescript, SiMongodb, SiMysql, SiPostgresql, SiTensorflow, 
+  SiOpencv, SiDocker, SiGooglecloud, SiArduino, SiPostman 
+} from "react-icons/si";
 
 const skillCategories = [
   {
@@ -95,6 +89,7 @@ export const Skills = () => {
   return (
     <section id="skills" className="py-16 px-4 sm:px-6 md:py-20 relative">
       <div className="max-w-6xl mx-auto">
+        {/* Title */}
         <motion.div
           ref={ref}
           initial={{ opacity: 0 }}
@@ -108,8 +103,9 @@ export const Skills = () => {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Category Tabs */}
+        {/* Desktop Layout (unchanged) */}
+        <div className="hidden lg:grid lg:grid-cols-3 gap-8">
+          {/* Categories */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
@@ -144,27 +140,14 @@ export const Skills = () => {
             </div>
           </motion.div>
 
-          {/* Skills Display */}
+          {/* Skills box */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             className="lg:col-span-2"
           >
-            <div className="card-glass p-6 sm:p-8">
-              <div className="flex items-center gap-3 mb-4 sm:mb-6">
-                {skillCategories.map(category => (
-                  category.id === activeCategory && (
-                    <div key={category.id} className="flex items-center gap-2 sm:gap-3">
-                      <div className={`p-2 sm:p-3 rounded-lg bg-gradient-to-r ${category.color}`}>
-                        <category.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                      </div>
-                      <h3 className="text-xl sm:text-2xl font-bold gradient-text">{category.name}</h3>
-                    </div>
-                  )
-                ))}
-              </div>
-
+            <div className="card-glass p-4 sm:p-8">
               <div className="flex flex-wrap gap-3 sm:gap-4">
                 {activeSkills.map(skill => {
                   const Icon = skill.icon;
@@ -178,6 +161,54 @@ export const Skills = () => {
               </div>
             </div>
           </motion.div>
+        </div>
+
+        {/* Mobile Accordion */}
+        <div className="lg:hidden space-y-3">
+          {skillCategories.map((category) => (
+            <div key={category.id} className="w-full">
+              <button
+                onClick={() => setActiveCategory(activeCategory === category.id ? "" : category.id)}
+                className={`w-full p-4 rounded-xl border transition-all duration-300 text-left flex items-center gap-3 group text-base sm:text-lg ${
+                  activeCategory === category.id
+                    ? "bg-gradient-to-r from-primary/20 to-secondary/20 border-primary"
+                    : "card-glass hover:border-primary/50"
+                }`}
+              >
+                <div className={`p-2 rounded-lg bg-gradient-to-r ${category.color} group-hover:scale-110 transition-transform`}>
+                  <category.icon className="w-4 h-4 text-white" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-sm sm:text-base">{category.name}</h3>
+                </div>
+                <ChevronRight className={`w-4 h-4 transition-transform ${
+                  activeCategory === category.id ? "rotate-90 text-primary" : "text-gray-400"
+                }`} />
+              </button>
+
+              {/* Skills show only under clicked category */}
+              {activeCategory === category.id && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="mt-3 card-glass p-4"
+                >
+                  <div className="flex flex-wrap gap-3">
+                    {category.skills.map(skill => {
+                      const Icon = skill.icon;
+                      return (
+                        <div key={skill.name} className="flex items-center gap-2 p-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors cursor-default text-sm">
+                          <Icon className="w-4 h-4 text-white" />
+                          <span className="text-white font-medium">{skill.name}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </motion.div>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </section>

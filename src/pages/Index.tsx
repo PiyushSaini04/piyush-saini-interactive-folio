@@ -53,9 +53,10 @@ const Index = () => {
             carShiftX: [-0.8, 0.8],
             carFloorSeparation: [0, 5],
             colors: {
-              roadColor: 0x080808,
-              islandColor: 0x0a0a0a,
-              background: 0x000000,
+              background: 0x101010,  // instead of 0x000000
+              roadColor: 0x181818,   // instead of 0x080808
+              islandColor: 0x202020, // instead of 0x0a0a0a
+
               shoulderLines: 0xFFFFFF,
               brokenLines: 0xFFFFFF,
               leftCars: [0xD856BF, 0x6750A2, 0xC247AC],
