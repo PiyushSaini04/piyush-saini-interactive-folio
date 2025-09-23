@@ -7,10 +7,15 @@ export const Hero = () => {
   };
 
   const downloadResume = () => {
-    // Add your resume URL here
-    const resumeUrl = "/resume-piyush-saini.pdf";
-    window.open(resumeUrl, "_blank");
+    const resumeUrl = "/resume-piyush-saini.pdf"; // must be in public/
+    const link = document.createElement("a");
+    link.href = resumeUrl;
+    link.setAttribute("download", "Piyush-Saini-Resume.pdf");
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
   };
+
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
