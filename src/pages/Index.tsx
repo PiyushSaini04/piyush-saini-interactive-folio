@@ -8,7 +8,6 @@ import { Experience } from "../components/Portfolio/Experience";
 import { Education } from "../components/Portfolio/Education";
 import Contacts from "../components/Portfolio/Contact";
 import { Footer } from "../components/Portfolio/Footer";
-import Hyperspeed from "@/components/Portfolio/Hyperspeed";
 import ProximityGraphAnimation from "@/components/Portfolio/ProximityGraphAnimation"; // import new animation
 
 const Index = () => {

@@ -8,8 +8,6 @@ import { ThemeProvider } from "./components/ThemeProvider";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
-// ✅ Import loader
-import Loader from "./components/Portfolio/Loader";
 
 const queryClient = new QueryClient();
 
@@ -20,12 +18,6 @@ const App: React.FC = () => {
     const timer = setTimeout(() => setLoading(false), 3200); // 2 sec
     return () => clearTimeout(timer);
   }, []);
-
-  if (loading) return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black z-[100]">
-      <Loader />
-    </div>
-  ); // show loader
 
   return (
     <QueryClientProvider client={queryClient}>
