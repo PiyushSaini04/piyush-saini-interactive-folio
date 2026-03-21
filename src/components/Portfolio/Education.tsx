@@ -1,227 +1,310 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
-import { GraduationCap, Award, Calendar, MapPin } from "lucide-react";
+import React, { useRef, useEffect, useState } from "react";
+import { motion, useInView } from "framer-motion";
+import { initParticles } from "./particles";
+import { 
+  GraduationCap, 
+  Award, 
+  Calendar, 
+  MapPin, 
+  BookOpen, 
+  CheckCircle2,
+  Trophy,
+  ExternalLink
+} from "lucide-react";
 
+// --- Data Structures ---
 const educationData = [
   {
     id: 1,
     degree: "B.Tech in Computer Science Engineering",
     institution: "Lovely Professional University",
     location: "Jalandhar, Punjab",
-    period: "2023 - 2027",
+    period: "2023 — 2027",
     cgpa: "7.8 CGPA",
-    status: "Current",
-    description: "Specializing in Computer Science with focus on AI/ML, Web Development, and Software Engineering. Active participant in tech clubs and hackathons.",
+    status: "In Progress",
+    description: "Specializing in Computer Science with a core focus on Artificial Intelligence, Machine Learning, and Advanced Web Technologies.",
     highlights: [
-      "Tech Lead at Optimus Club",
-      "Active in AI/ML research projects",
-      "Organizer of tech events and hackathons",
-      "Contributor to open-source projects"
+      "Tech Lead at Optimus Club overseeing student projects",
+      "Active researcher in AI/ML neural network optimization",
+      "Lead Organizer for University-level Hackathons",
+      "Top contributor to internal Open-Source repositories"
     ],
-    color: "from-blue-500 to-cyan-500",
+    color: "from-blue-600 to-indigo-500",
     icon: GraduationCap
   },
   {
     id: 2,
     degree: "Senior Secondary (12th Grade)",
     institution: "Army Public School",
-    location: "India",
-    period: "2021 - 2022",
+    location: "New Delhi, India",
+    period: "2021 — 2022",
     cgpa: "8.1 CGPA",
     status: "Completed",
-    description: "Completed senior secondary education with strong foundation in Mathematics, Physics, and Computer Science.",
+    description: "Academic focus on STEM subjects: Physics, Chemistry, and Advanced Mathematics with Computer Science electives.",
     highlights: [
-      "Strong foundation in STEM subjects",
-      "Early programming experience",
-      "Participated in science exhibitions",
-      "Active in extracurricular activities"
+      "Secured distinction in Mathematics and Computer Science",
+      "Represented school in Regional Science Exhibitions",
+      "Early adopter of Python and C++ programming",
+      "Member of the School Quiz and Debating Society"
     ],
-    color: "from-green-500 to-emerald-500",
+    color: "from-emerald-500 to-teal-400",
     icon: Award
   }
 ];
 
 const certifications = [
   {
-    title: "HTML & CSS Certification",
+    title: "Responsive Web Design",
     provider: "FreeCodeCamp",
-    date: "2025",
-    description: "Comprehensive web development fundamentals",
-    color: "from-orange-500 to-red-500"
+    date: "Jan 2025",
+    description: "300+ hours of advanced HTML5, CSS3, and Flexbox/Grid layouts.",
+    color: "from-orange-500 to-amber-400"
   },
   {
-    title: "Social Networking Course",
-    provider: "NPTEL",
-    date: "2025",
-    description: "Understanding digital communication and networks",
-    color: "from-purple-500 to-pink-500"
+    title: "Social Computing & Networks",
+    provider: "NPTEL (IIT Madras)",
+    date: "Feb 2025",
+    description: "Analyzing digital communication patterns and network topologies.",
+    color: "from-purple-600 to-violet-400"
   },
   {
     title: "Programming Proficiency",
     provider: "HackerRank",
     date: "Ongoing",
-    description: "5★ ratings in Python, C, and C++",
-    color: "from-yellow-500 to-orange-500"
+    description: "Gold Level Proficiency (5★) in Python, C, and C++ Problem Solving.",
+    color: "from-rose-500 to-pink-400"
   }
 ];
 
-export const Education = () => {
+// --- Interactive Neural Background Component ---
+const InteractiveBackground = () => {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+
+    let animationId;
+
+    const mouse = { x: null, y: null, radius: 150 };
+
+    // Resize canvas
+    const handleResize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+
+    // Mouse tracking
+    const handleMouseMove = (e) => {
+      mouse.x = e.x;
+      mouse.y = e.y;
+    };
+
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("mousemove", handleMouseMove);
+
+    handleResize();
+
+    // 🔥 Call particles engine
+    const animate = initParticles(canvas, ctx, mouse);
+    animationId = animate();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("mousemove", handleMouseMove);
+      cancelAnimationFrame(animationId);
+    };
+  }, []);
+
+  return (
+    <div className="fixed inset-0 -z-10 overflow-hidden">
+      <canvas ref={canvasRef} className="block w-full h-full" />
+
+      {/* Dynamic Gradients */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute -top-1/4 -left-1/4 w-1/2 h-1/2 rounded-full bg-blue-600/10 blur-[120px] animate-pulse" />
+        <div className="absolute -bottom-1/4 -right-1/4 w-1/2 h-1/2 rounded-full bg-indigo-600/10 blur-[120px] animate-pulse delay-700" />
+      </div>
+
+      {/* Noise Texture */}
+      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 pointer-events-none" />
+    </div>
+  );
+};
+
+// --- Rest of the components stay consistent with the professional UI ---
+
+const SectionHeader = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
   return (
-    <section id="education" className="py-16 px-4 sm:px-6 md:py-20 relative">
-      <div className="max-w-6xl mx-auto">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-12 md:mb-16"
-        >
-          <h2 className="section-title text-3xl sm:text-4xl md:text-5xl">My Academic Journey</h2>
-          <p className="section-subtitle text-base sm:text-lg">
-            Educational background and continuous learning achievements
-          </p>
-        </motion.div>
-
-        <div className="space-y-10 md:space-y-12">
-          {/* Education Timeline */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <div className="relative">
-              {/* Timeline Line */}
-              <div className="absolute left-4 md:left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-secondary to-accent hidden md:block" />
-              
-              {educationData.map((edu, index) => (
-                <motion.div
-                  key={edu.id}
-                  initial={{ opacity: 0, x: -50 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-                  transition={{ duration: 0.8, delay: 0.4 + index * 0.2 }}
-                  className="relative pl-0 md:pl-20 mb-8 md:mb-12 last:mb-0"
-                >
-                  {/* Timeline Dot */}
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={isInView ? { scale: 1 } : { scale: 0 }}
-                    transition={{ duration: 0.5, delay: 0.6 + index * 0.2 }}
-                    className={`absolute left-2 md:left-4 top-4 md:top-8 w-6 h-6 md:w-8 md:h-8 rounded-full bg-gradient-to-r ${edu.color} border-2 md:border-4 border-background hidden md:flex items-center justify-center shadow-lg`}
-                  >
-                    <edu.icon className="w-3 h-3 md:w-4 md:h-4 text-white" />
-                  </motion.div>
-                  
-                  <div className="card-glass group hover:bg-gradient-to-br hover:from-primary/10 hover:to-secondary/10 p-5 sm:p-6">
-                    <div className="flex items-start gap-3 sm:gap-4 mb-3 sm:mb-4">
-                      <div className={`md:hidden p-2 sm:p-3 rounded-xl bg-gradient-to-r ${edu.color} group-hover:scale-110 transition-transform`}>
-                        <edu.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                      </div>
-                      
-                      <div className="flex-1">
-                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                          <h3 className="text-lg sm:text-xl font-bold gradient-text mb-1 sm:mb-0">
-                            {edu.degree}
-                          </h3>
-                          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-                            <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${
-                              edu.status === "Current" 
-                                ? "bg-green-500/20 text-green-400 border border-green-500/30" 
-                                : "bg-blue-500/20 text-blue-400 border border-blue-500/30"
-                            }`}>
-                              {edu.status}
-                            </span>
-                            <span className="text-base sm:text-lg font-bold text-primary">
-                              {edu.cgpa}
-                            </span>
-                          </div>
-                        </div>
-                        
-                        <div className="flex flex-col sm:flex-row gap-1 sm:gap-2 text-xs sm:text-sm text-gray-300 mb-2 sm:mb-3">
-                          <div className="flex items-center gap-1">
-                            <GraduationCap className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
-                            <span className="font-medium">{edu.institution}</span>
-                          </div>
-                          <span className="hidden sm:inline">•</span>
-                          <div className="flex items-center gap-1">
-                            <MapPin className="w-3 h-3 sm:w-4 sm:h-4 text-secondary" />
-                            <span>{edu.location}</span>
-                          </div>
-                          <span className="hidden sm:inline">•</span>
-                          <div className="flex items-center gap-1">
-                            <Calendar className="w-3 h-3 sm:w-4 sm:h-4 text-accent" />
-                            <span>{edu.period}</span>
-                          </div>
-                        </div>
-                        
-                        <p className="text-sm text-gray-300 leading-relaxed mb-3 sm:mb-4">
-                          {edu.description}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Highlights */}
-                    <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-1 sm:gap-2">
-                      {edu.highlights.map((highlight, idx) => (
-                        <div key={idx} className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-gradient-to-r from-primary to-secondary rounded-full mt-2 flex-shrink-0" />
-                          <span className="text-xs sm:text-sm text-gray-300">{highlight}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Certifications */}
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-          >
-            <h3 className="text-2xl sm:text-3xl font-bold mb-6 md:mb-8 gradient-text text-center">
-              Certifications & Achievements
-            </h3>
-            
-            <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-              {certifications.map((cert, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.5, delay: 1.0 + index * 0.1 }}
-                  className="card-glass group hover:bg-gradient-to-br hover:from-primary/10 hover:to-secondary/10 text-center p-5 sm:p-6"
-                >
-                  <div className={`w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 rounded-full bg-gradient-to-r ${cert.color} flex items-center justify-center group-hover:scale-110 transition-transform`}>
-                    <Award className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
-                  </div>
-                  
-                  <h4 className="font-bold text-base sm:text-lg mb-1 sm:mb-2 group-hover:gradient-text transition-all">
-                    {cert.title}
-                  </h4>
-                  
-                  <p className="text-primary font-medium mb-1 sm:mb-2 text-sm sm:text-base">
-                    {cert.provider}
-                  </p>
-                  
-                  <p className="text-xs sm:text-sm text-gray-400 mb-2 sm:mb-3">
-                    {cert.date}
-                  </p>
-                  
-                  <p className="text-xs sm:text-sm text-gray-300">
-                    {cert.description}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.6 }}
+      className="text-center mb-16 md:mb-24"
+    >
+      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold uppercase tracking-wider mb-4">
+        <BookOpen className="w-3.5 h-3.5" />
+        Education
       </div>
-    </section>
+      <h2 className="text-4xl md:text-6xl font-black text-white tracking-tight mb-6">
+        Academic <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">Journey</span>
+      </h2>
+      <p className="max-w-2xl mx-auto text-slate-400 text-lg md:text-xl leading-relaxed">
+        A timeline of my formal education and specialized certifications, 
+        driven by a passion for continuous technological growth.
+      </p>
+    </motion.div>
   );
 };
+
+const EducationCard = ({ edu, index }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
+      animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
+      transition={{ duration: 0.7, delay: index * 0.1 }}
+      className="relative grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-start gap-8 md:gap-0 pb-12 md:pb-0"
+    >
+      {/* Left Side Content (Desktop) */}
+      <div className={`hidden md:block ${index % 2 !== 0 ? "order-3" : "text-right"}`}>
+        <div className="py-4">
+          <span className="text-2xl font-bold text-slate-500">{edu.period}</span>
+          <p className="text-blue-400 font-medium">{edu.status}</p>
+        </div>
+      </div>
+
+      {/* Center Timeline Connector */}
+      <div className="hidden md:flex flex-col items-center justify-start h-full px-8 order-2">
+        <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${edu.color} flex items-center justify-center shadow-lg shadow-blue-500/20 ring-4 ring-slate-950 z-10`}>
+          <edu.icon className="w-6 h-6 text-white" />
+        </div>
+        <div className="w-0.5 h-full bg-gradient-to-b from-slate-800 to-transparent" />
+      </div>
+
+      {/* Main Card */}
+      <div className={`order-1 ${index % 2 !== 0 ? "md:order-1 md:text-right" : "md:order-3"}`}>
+        <div className="group relative bg-slate-900/50 backdrop-blur-xl border border-slate-800 p-6 md:p-8 rounded-3xl transition-all duration-300 hover:border-blue-500/30 hover:shadow-2xl hover:shadow-blue-500/10">
+          <div className="flex flex-col gap-4">
+            {/* Mobile Header */}
+            <div className="flex items-center gap-4 md:hidden">
+              <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${edu.color} flex items-center justify-center shadow-lg`}>
+                <edu.icon className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <p className="text-blue-400 font-bold text-sm">{edu.period}</p>
+                <p className="text-slate-500 text-xs uppercase tracking-widest">{edu.status}</p>
+              </div>
+            </div>
+
+            <div className={`flex flex-col ${index % 2 !== 0 ? "md:items-end" : ""}`}>
+              <h3 className="text-2xl font-bold text-white group-hover:text-blue-400 transition-colors">
+                {edu.degree}
+              </h3>
+              <div className="flex flex-wrap items-center gap-2 mt-2">
+                <span className="bg-slate-800 text-slate-300 px-3 py-1 rounded-lg text-sm font-medium border border-slate-700">
+                  {edu.institution}
+                </span>
+                <span className="bg-blue-500/10 text-blue-400 px-3 py-1 rounded-lg text-sm font-bold border border-blue-500/20">
+                  {edu.cgpa}
+                </span>
+              </div>
+            </div>
+
+            <p className="text-slate-400 leading-relaxed">
+              {edu.description}
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+              {edu.highlights.map((item, i) => (
+                <div key={i} className={`flex items-start gap-2 ${index % 2 !== 0 ? "md:flex-row-reverse md:text-right" : ""}`}>
+                  <CheckCircle2 className="w-4 h-4 text-blue-500 mt-1 flex-shrink-0" />
+                  <span className="text-sm text-slate-300">{item}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className={`flex items-center gap-4 pt-4 mt-4 border-t border-slate-800/50 ${index % 2 !== 0 ? "md:justify-end" : ""}`}>
+              <div className="flex items-center gap-1.5 text-slate-500 text-sm">
+                <MapPin className="w-4 h-4" />
+                {edu.location}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+const CertificationCard = ({ cert, index }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.5, delay: index * 0.1 }}
+    className="group relative bg-slate-900/40 backdrop-blur-md border border-slate-800 p-6 rounded-2xl hover:bg-slate-800/50 transition-all cursor-default"
+  >
+    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${cert.color} flex items-center justify-center mb-6 shadow-lg transition-transform group-hover:scale-110`}>
+      <Trophy className="w-6 h-6 text-white" />
+    </div>
+    <h4 className="text-lg font-bold text-white mb-1 group-hover:text-blue-400 transition-colors">{cert.title}</h4>
+    <p className="text-blue-500 text-sm font-semibold mb-3">{cert.provider}</p>
+    <p className="text-slate-400 text-sm mb-4 leading-relaxed">{cert.description}</p>
+    <div className="flex items-center justify-between mt-auto">
+      <span className="text-slate-500 text-xs font-medium">{cert.date}</span>
+      <ExternalLink className="w-4 h-4 text-slate-600 group-hover:text-blue-400 transition-colors" />
+    </div>
+  </motion.div>
+);
+
+export default function Education() {
+  return (
+    <div className="min-h-screen text-slate-200 selection:bg-blue-500/30">
+      <InteractiveBackground />
+      
+      <main className="container mx-auto px-6 py-24 md:py-32">
+        <SectionHeader />
+
+        {/* Education Timeline */}
+        <div className="max-w-6xl mx-auto space-y-8 md:space-y-0 relative">
+          {educationData.map((edu, index) => (
+            <EducationCard key={edu.id} edu={edu} index={index} />
+          ))}
+        </div>
+
+        {/* Certifications Section */}
+        <div className="mt-32 md:mt-48">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Professional <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">Accreditations</span>
+            </h3>
+            <p className="text-slate-400">Verifiable achievements and technical skills mastery.</p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {certifications.map((cert, index) => (
+              <CertificationCard key={index} cert={cert} index={index} />
+            ))}
+          </div>
+        </div>
+      </main>
+
+      
+    </div>
+  );
+}
+
+export { Education };

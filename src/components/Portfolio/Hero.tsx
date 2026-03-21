@@ -1,13 +1,19 @@
+import React from 'react';
 import { motion } from "framer-motion";
-import { Github, Linkedin, Mail, Download, Phone } from "lucide-react";
+import { Github, Linkedin, Mail, Download, ArrowRight } from "lucide-react";
 
+/**
+ * Hero Component
+ * Redesigned using a formal 2-column grid layout for desktop.
+ * Optimized for high-impact visual presentation.
+ */
 export const Hero = () => {
   const scrollToContact = () => {
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
 
   const downloadResume = () => {
-    const resumeUrl = "/resume-piyush-saini.pdf"; // must be in public/
+    const resumeUrl = "/resume-piyush-saini.pdf"; 
     const link = document.createElement("a");
     link.href = resumeUrl;
     link.setAttribute("download", "Piyush-Saini-Resume.pdf");
@@ -16,108 +22,147 @@ export const Hero = () => {
     link.remove();
   };
 
-
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-    
-      
-      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="space-y-6"
-        >
-          {/* Greeting */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="text-lg sm:text-xl text-gray-300 font-medium"
-          >
-            Hi, I'm
-          </motion.p>
+    <section 
+      id="home" 
+      className="relative min-h-screen flex items-center justify-center overflow-hidde text-white py-12 px-6"
+    >
+      {/* Dynamic Background */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-600/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-purple-600/10 rounded-full blur-[120px]" />
+      </div>
+
+      <div className="container mx-auto max-w-7xl relative z-10">
+        {/* Main Grid Container */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
           
-          {/* Name with gradient animation */}
-          <motion.h1
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold gradient-text mb-6 pb-4"
-          >
-            Piyush Saini
-          </motion.h1>
-          
-          {/* Tagline */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-            className="text-base sm:text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed"
-          >
-            Frontend & Full-Stack Developer passionate about building{" "}
-            <span className="gradient-text font-semibold">scalable</span> and{" "}
-            <span className="gradient-text font-semibold">interactive</span> web solutions.
-          </motion.p>
-          
-          {/* CTA Buttons */}
-          <motion.div
+          {/* Column 1: Text Content */}
+          <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center mt-8 px-4"
+            transition={{ duration: 0.8 }}
+            className="flex flex-col space-y-8 text-center lg:text-left order-2 lg:order-1"
           >
-            
-            
-            <button
-              onClick={downloadResume}
-              className="btn-secondary flex items-center gap-2 justify-center w-full sm:w-auto"
-            >
-              <Download className="w-4 h-4" />
-              Download Resume
-            </button>
-            
-            <button
-              onClick={scrollToContact}
-              className="btn-primary flex items-center gap-2 justify-center w-full sm:w-auto"
-            >
-              <Mail className="w-4 h-4" />
-              Contact Me
-            </button>
+            <div className="space-y-6">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+                className="flex items-center justify-center lg:justify-start gap-3"
+              >
+                <span className="w-12 h-[1px] bg-blue-500 hidden lg:block"></span>
+                <span className="text-blue-400 font-semibold tracking-widest text-sm uppercase">
+                  Full-Stack Architect
+                </span>
+              </motion.div>
+              
+              <h1 className="text-5xl sm:text-6xl xl:text-8xl font-bold leading-[1.1] tracking-tight">
+                Piyush <br />
+                <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-500 bg-clip-text text-transparent">
+                  Saini
+                </span>
+              </h1>
+              
+              <p className="text-lg sm:text-xl text-gray-400 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                Building the next generation of <span className="text-white">scalable digital experiences</span>. Focused on clean code, performance, and user-centric design.
+              </p>
+            </div>
+
+            {/* Buttons */}
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+              <button
+                onClick={scrollToContact}
+                className="group relative w-full sm:w-auto px-8 py-4 bg-white text-black font-bold rounded-xl overflow-hidden transition-all hover:bg-blue-50 active:scale-95 flex items-center justify-center gap-2"
+              >
+                <span>Get In Touch</span>
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </button>
+              
+              <button
+                onClick={downloadResume}
+                className="w-full sm:w-auto px-8 py-4 bg-white/5 border border-white/10 hover:bg-white/10 text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2"
+              >
+                <Download className="w-4 h-4" />
+                Resume
+              </button>
+            </div>
+
+            {/* Social Links */}
+            <div className="flex items-center justify-center lg:justify-start gap-4">
+              {[
+                { icon: Linkedin, href: "https://www.linkedin.com/in/piyushsaini2004/" },
+                { icon: Github, href: "https://github.com/PiyushSaini04" },
+                { icon: Mail, href: "mailto:your-email@example.com" }
+              ].map((item, idx) => (
+                <a
+                  key={idx}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 rounded-lg bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-blue-500/50 hover:bg-blue-500/5 transition-all"
+                >
+                  <item.icon className="w-5 h-5" />
+                </a>
+              ))}
+            </div>
           </motion.div>
-          
-          {/* Social Links */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.0 }}
-            className="flex justify-center gap-4 sm:gap-6 mt-12"
+
+          {/* Column 2: Visual Content */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1 }}
+            className="flex items-center justify-center order-1 lg:order-2"
           >
-            <a
-              href="https://www.linkedin.com/in/piyushsaini2004/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 sm:p-3 rounded-full bg-glass border border-glass-border hover:bg-glass-hover transition-all duration-300 hover:scale-110 group"
-            >
-              <Linkedin className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300 group-hover:text-white transition-colors" />
-            </a>
-            
-            <a
-              href="https://github.com/PiyushSaini04"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 sm:p-3 rounded-full bg-glass border border-glass-border hover:bg-glass-hover transition-all duration-300 hover:scale-110 group"
-            >
-              <Github className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300 group-hover:text-white transition-colors" />
-            </a>
-            
-            
+            <div className="relative group">
+              {/* Background Glows */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-[3rem] blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+              
+              {/* Image Container */}
+              <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-[480px] lg:h-[480px] bg-[#16161a] rounded-[2.8rem] overflow-hidden border border-white/10">
+                <img 
+                  src="public/IMG20260120123304.jpg" 
+                  alt="Piyush Saini" 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                
+                {/* Visual Overlay elements */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0c] via-transparent to-transparent opacity-60" />
+                
+                {/* Experience Badge */}
+                <div className="absolute bottom-8 left-8 right-8 p-6 bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl hidden md:block">
+                   <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <p className="text-[10px] uppercase tracking-widest text-blue-400 font-bold mb-1">Status</p>
+                        <p className="text-sm font-medium">Available to Work</p>
+                      </div>
+                      <div>
+                        <p className="text-[10px] uppercase tracking-widest text-purple-400 font-bold mb-1">Focus</p>
+                        <p className="text-sm font-medium">Full-Stack / AI</p>
+                      </div>
+                   </div>
+                </div>
+              </div>
+
+              {/* Decorative Floating Elements */}
+              <motion.div 
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -top-6 -right-6 w-20 h-20 bg-blue-500/20 rounded-full blur-2xl pointer-events-none"
+              />
+              <motion.div 
+                animate={{ y: [0, 10, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                className="absolute -bottom-10 -left-10 w-32 h-32 bg-purple-500/20 rounded-full blur-3xl pointer-events-none"
+              />
+            </div>
           </motion.div>
-          
-          {/* Scroll Indicator */}
-        
-        </motion.div>
+
+        </div>
       </div>
     </section>
   );
-};
+}
+
+export default Hero;

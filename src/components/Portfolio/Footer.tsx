@@ -27,7 +27,12 @@ export const Footer = () => {
   ];
 
   return (
-    <footer className="relative py-8 px-4 sm:py-10 md:py-12 border-t border-border">
+    <footer className="relative py-8 px-4 sm:py-10 md:py-12  border-t border-border">
+      {/* Ambient Background Elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-indigo-500/10 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[10%] right-[0%] w-[30%] h-[30%] bg-purple-500/10 blur-[100px] rounded-full" />
+      </div>
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row md:gap-6">
           {/* Left side - Copyright */}

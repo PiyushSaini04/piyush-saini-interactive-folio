@@ -1,6 +1,5 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import { 
   Mail, 
   Phone, 
@@ -10,287 +9,321 @@ import {
   Linkedin, 
   MessageSquare,
   CheckCircle,
-  AlertCircle
+  AlertCircle,
+  ArrowRight,
+  ExternalLink,
+  Loader2,
+  Contact
 } from "lucide-react";
-import emailjs from '@emailjs/browser';
 
-export const Contact = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+/**
+ * Professional Contact Page Component
+ * Features: Responsive Design, Framer Motion Animations, REST API Email Integration, 
+ * Glassmorphism UI, and Form Validation States.
+ */
+
+const Contacts = () => {
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitStatus, setSubmitStatus] = useState('idle'); // 'idle' | 'success' | 'error'
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setIsSubmitting(true);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email || !formData.message) return;
+    
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
 
-  try {
-    await emailjs.send(
-      "service_o7rujg9", // your EmailJS service ID
-      "template_ki3wyi9", // your EmailJS template ID
-      {
-        from_name: formData.name,
-        from_email: formData.email,
-        message: `Name: ${formData.name}\nEmail: ${formData.email}\nMessage:\n${formData.message}`,
-        to_email: "piyushsaini0404@gmail.com"
-      },
-      "eA_rUJJdfpUYYJwP_" // your EmailJS public key
-    );
+    try {
+      // Using Fetch API to avoid external dependency issues
+      const response = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          service_id: "service_o7rujg9",
+          template_id: "template_ki3wyi9",
+          user_id: "eA_rUJJdfpUYYJwP_", // Public Key
+          template_params: {
+            from_name: formData.name,
+            from_email: formData.email,
+            message: `Name: ${formData.name}\nEmail: ${formData.email}\nMessage:\n${formData.message}`,
+            to_email: "piyushsaini0404@gmail.com"
+          }
+        }),
+      });
 
-    setSubmitStatus('success');
-    setFormData({ name: '', email: '', message: '' });
-  } catch (error) {
-    console.error(error);
-    setSubmitStatus('error');
-  } finally {
-    setIsSubmitting(false);
-    setTimeout(() => setSubmitStatus('idle'), 3000);
-  }
-};
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        throw new Error('Failed to send message');
+      }
+    } catch (error) {
+      console.error("Email Error:", error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+      // Reset status after 5 seconds
+      setTimeout(() => setSubmitStatus('idle'), 5000);
+    }
+  };
 
-  const contactInfo = [
+  const contactMethods = [
     {
       icon: Mail,
-      title: "Email",
+      label: "Email",
       value: "piyushsaini0404@gmail.com",
       link: "mailto:piyushsaini0404@gmail.com",
-      color: "from-red-500 to-pink-500"
+      accent: "bg-blue-500/10 text-blue-400"
     },
     {
       icon: Phone,
-      title: "Phone",
+      label: "Phone",
       value: "+91 9667169762",
       link: "tel:+919667169762",
-      color: "from-green-500 to-emerald-500"
+      accent: "bg-emerald-500/10 text-emerald-400"
     },
     {
       icon: MapPin,
-      title: "Location",
+      label: "Location",
       value: "Jalandhar, Punjab, India",
       link: "https://maps.google.com/?q=Jalandhar+Punjab+India",
-      color: "from-blue-500 to-cyan-500"
+      accent: "bg-purple-500/10 text-purple-400"
     }
   ];
 
-  const socialLinks = [
-    {
-      icon: Github,
-      name: "GitHub",
-      url: "https://github.com/piyush-saini",
-      color: "hover:text-gray-300"
-    },
-    {
-      icon: Linkedin,
-      name: "LinkedIn",
-      url: "https://linkedin.com/in/piyush-saini",
-      color: "hover:text-blue-400"
-    },
-    {
-      icon: Mail,
-      name: "Email",
-      url: "mailto:piyushsaini0404@gmail.com",
-      color: "hover:text-red-400"
-    }
+  const socials = [
+    { icon: Github, url: "https://github.com/piyush-saini", name: "GitHub" },
+    { icon: Linkedin, url: "https://linkedin.com/in/piyush-saini", name: "LinkedIn" },
   ];
 
   return (
-    <section id="contact" className="py-16 px-4 sm:px-6 md:py-20 relative">
-      <div className="max-w-6xl mx-auto">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-12 md:mb-16"
+    <div className="min-h-content text-slate-200 font-sans selection:bg-indigo-500/30  relative">
+      {/* Ambient Background Elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-indigo-500/10 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[10%] right-[0%] w-[30%] h-[30%] bg-purple-500/10 blur-[100px] rounded-full" />
+      </div>
+
+      <section 
+        id="contact" 
+        ref={sectionRef}
+        className="relative z-10 py-20 px-4 md:px-8 max-w-7xl mx-auto h-auto"
+      >
+        {/* Section Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16 space-y-4"
         >
-          <h2 className="section-title text-3xl sm:text-4xl md:text-5xl">Let's Work Together</h2>
-          <p className="section-subtitle text-base sm:text-lg">
-            Have a project in mind? Let's discuss how we can bring your ideas to life
+          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white">
+            Let's build <span className="bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">something great</span>.
+          </h2>
+          <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+            Ready to start a new project or just want to say hi? My inbox is always open.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-5 gap-8 md:gap-12">
-          {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="lg:col-span-2 space-y-6 md:space-y-8"
+        <div className="grid lg:grid-cols-12 gap-12 items-start">
+          
+          {/* Left Column: Info & Socials */}
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="lg:col-span-5 space-y-8"
           >
-            <div className="card-glass p-6 sm:p-8">
-              <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 gradient-text">Get in Touch</h3>
-              <p className="text-sm sm:text-base text-gray-300 mb-6 sm:mb-8 leading-relaxed">
-                I'm always interested in hearing about new opportunities, 
-                whether that's a project, job opportunity, or just a chat about technology.
-              </p>
-
-              <div className="space-y-3 sm:space-y-4">
-                {contactInfo.map((info, index) => (
-                  <motion.a
-                    key={index}
-                    href={info.link}
-                    target={info.link.startsWith('http') ? '_blank' : '_self'}
-                    rel={info.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                    transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-                    className="flex items-center gap-3 sm:gap-4 p-3 rounded-xl hover:bg-glass-hover transition-all duration-300 group"
+            <div className="p-8 rounded-3xl bg-slate-900/40 border border-slate-800 backdrop-blur-xl shadow-2xl">
+              <h3 className="text-2xl font-semibold mb-6 text-white">Contact Information</h3>
+              
+              <div className="space-y-6">
+                {contactMethods.map((method, idx) => (
+                  <a 
+                    key={idx}
+                    href={method.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center group gap-4 p-4 rounded-2xl hover:bg-slate-800/50 transition-all duration-300"
                   >
-                    <div className={`p-2 rounded-lg bg-gradient-to-r ${info.color} group-hover:scale-110 transition-transform`}>
-                      <info.icon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                    <div className={`p-3 rounded-xl ${method.accent} group-hover:scale-110 transition-transform`}>
+                      <method.icon size={24} />
                     </div>
                     <div>
-                      <p className="font-medium text-xs sm:text-sm text-gray-400">{info.title}</p>
-                      <p className="text-sm sm:text-base text-gray-300 group-hover:text-white transition-colors">
-                        {info.value}
-                      </p>
+                      <p className="text-xs font-bold uppercase tracking-widest text-slate-500">{method.label}</p>
+                      <p className="text-lg font-medium group-hover:text-white transition-colors">{method.value}</p>
                     </div>
-                  </motion.a>
+                    <ExternalLink size={16} className="ml-auto opacity-0 group-hover:opacity-40 transition-opacity" />
+                  </a>
                 ))}
               </div>
 
-              <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-border">
-                <p className="text-xs sm:text-sm text-gray-400 mb-3 sm:mb-4">Follow me on</p>
-                <div className="flex gap-3 sm:gap-4">
-                  {socialLinks.map((social, index) => (
-                    <motion.a
-                      key={index}
+              <div className="mt-12 pt-8 border-t border-slate-800">
+                <p className="text-sm text-slate-500 mb-6">Connect with me on social media</p>
+                <div className="flex gap-4">
+                  {socials.map((social, idx) => (
+                    <a 
+                      key={idx}
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      initial={{ opacity: 0, scale: 0 }}
-                      animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
-                      transition={{ duration: 0.3, delay: 0.6 + index * 0.1 }}
-                      className={`p-2 sm:p-3 rounded-full bg-glass border border-border hover:bg-glass-hover transition-all duration-300 hover:scale-110 text-gray-400 ${social.color}`}
+                      className="p-4 rounded-2xl bg-slate-800/50 hover:bg-indigo-600 hover:text-white transition-all duration-300 transform hover:-translate-y-1"
+                      aria-label={social.name}
                     >
-                      <social.icon className="w-4 h-4 sm:w-5 sm:h-5" />
-                    </motion.a>
+                      <social.icon size={22} />
+                    </a>
                   ))}
                 </div>
               </div>
             </div>
+
+            {/* Availability Badge */}
+            <div className="flex items-center gap-3 px-6 py-4 rounded-full bg-emerald-500/10 border border-emerald-500/20 w-fit">
+              <span className="relative flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+              </span>
+              <span className="text-sm font-medium text-emerald-400">Available for new projects</span>
+            </div>
           </motion.div>
 
-          {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="lg:col-span-3"
+          {/* Right Column: Contact Form */}
+          <motion.div 
+            initial={{ opacity: 0, x: 30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="lg:col-span-7"
           >
-            <div className="card-glass p-6 sm:p-8">
-              <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-                <div className="p-2 rounded-lg bg-gradient-to-r from-primary to-secondary">
-                  <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+            <div className="p-8 md:p-10 rounded-3xl bg-slate-900/40 border border-slate-800 backdrop-blur-xl shadow-2xl">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="p-2 bg-indigo-500/20 rounded-lg">
+                  <MessageSquare className="text-indigo-400" size={20} />
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold gradient-text">Send Message</h3>
+                <h3 className="text-2xl font-semibold text-white">Send a Message</h3>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-                <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
-                  <div>
-                    <label htmlFor="name" className="block text-xs sm:text-sm font-medium text-gray-300 mb-1 sm:mb-2">
-                      Your Name
-                    </label>
-                    <input
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-slate-400 ml-1">Full Name</label>
+                    <input 
                       type="text"
-                      id="name"
                       name="name"
                       value={formData.name}
                       onChange={handleInputChange}
+                      placeholder="John Doe"
                       required
-                      className="input-glass w-full text-sm sm:text-base px-3 py-2"
-                      placeholder="Enter your name"
+                      className="w-full bg-slate-950/50 border border-slate-800 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all placeholder:text-slate-700"
                     />
                   </div>
-
-                  <div>
-                    <label htmlFor="email" className="block text-xs sm:text-sm font-medium text-gray-300 mb-1 sm:mb-2">
-                      Email Address
-                    </label>
-                    <input
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-slate-400 ml-1">Email Address</label>
+                    <input 
                       type="email"
-                      id="email"
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
+                      placeholder="john@example.com"
                       required
-                      className="input-glass w-full text-sm sm:text-base px-3 py-2"
-                      placeholder="Enter your email"
+                      className="w-full bg-slate-950/50 border border-slate-800 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all placeholder:text-slate-700"
                     />
                   </div>
                 </div>
 
-                <div>
-                  <label htmlFor="message" className="block text-xs sm:text-sm font-medium text-gray-300 mb-1 sm:mb-2">
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-slate-400 ml-1">Your Message</label>
+                  <textarea 
                     name="message"
+                    rows={6}
                     value={formData.message}
                     onChange={handleInputChange}
+                    placeholder="Tell me about your vision..."
                     required
-                    rows={5}
-                    className="input-glass w-full resize-none text-sm sm:text-base px-3 py-2"
-                    placeholder="Tell me about your project or just say hello..."
+                    className="w-full bg-slate-950/50 border border-slate-800 rounded-2xl px-5 py-4 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all placeholder:text-slate-700 resize-none"
                   />
                 </div>
 
-                <button
+                <button 
                   type="submit"
                   disabled={isSubmitting}
-                  className={`w-full btn-primary flex items-center justify-center gap-2 text-sm sm:text-base py-2.5 sm:py-3 ${
-                    isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
-                  }`}
+                  className="group relative w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-2xl transition-all duration-300 disabled:opacity-70 overflow-hidden shadow-lg shadow-indigo-500/20"
                 >
-                  {isSubmitting ? (
-                    <div className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  ) : (
-                    <Send className="w-3 h-3 sm:w-4 sm:h-4" />
-                  )}
-                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                  <AnimatePresence mode="wait">
+                    {isSubmitting ? (
+                      <motion.div 
+                        key="loading"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="flex items-center gap-2"
+                      >
+                        <Loader2 className="animate-spin" size={20} />
+                        <span>Sending...</span>
+                      </motion.div>
+                    ) : (
+                      <motion.div 
+                        key="idle"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="flex items-center gap-2"
+                      >
+                        <span>Send Message</span>
+                        <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </button>
 
-                {/* Status Messages */}
-                {submitStatus === 'success' && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="flex items-center gap-2 text-green-400 text-xs sm:text-sm"
-                  >
-                    <CheckCircle className="w-4 h-4" />
-                    Message sent successfully! I'll get back to you soon.
-                  </motion.div>
-                )}
-
-                {submitStatus === 'error' && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="flex items-center gap-2 text-red-400 text-xs sm:text-sm"
-                  >
-                    <AlertCircle className="w-4 h-4" />
-                    Something went wrong. Please try again later.
-                  </motion.div>
-                )}
+                {/* Status Toasts */}
+                <AnimatePresence>
+                  {submitStatus === 'success' && (
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center gap-3 text-emerald-400"
+                    >
+                      <CheckCircle size={20} />
+                      <p className="text-sm font-medium">Thank you! Your message has been received.</p>
+                    </motion.div>
+                  )}
+                  {submitStatus === 'error' && (
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center gap-3 text-rose-400"
+                    >
+                      <AlertCircle size={20} />
+                      <p className="text-sm font-medium">Oops! Failed to send. Please try again or email me directly.</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </form>
             </div>
           </motion.div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* Footer Branding */}
+      
+    </div>
   );
 };
+
+export default Contacts;
