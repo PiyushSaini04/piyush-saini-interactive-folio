@@ -13,7 +13,7 @@ export const Hero = () => {
   };
 
   const downloadResume = () => {
-    window.open("/public/General CV Template (approved).pdf", "_blank");
+    window.open("/General CV Template (approved).pdf", "_blank");
   };
 
   return (
