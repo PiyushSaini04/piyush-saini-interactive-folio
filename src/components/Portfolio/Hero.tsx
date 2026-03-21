@@ -13,13 +13,7 @@ export const Hero = () => {
   };
 
   const downloadResume = () => {
-    const resumeUrl = "/resume-piyush-saini.pdf"; 
-    const link = document.createElement("a");
-    link.href = resumeUrl;
-    link.setAttribute("download", "Piyush-Saini-Resume.pdf");
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
+    window.open("/public/General CV Template (approved).pdf", "_blank");
   };
 
   return (
