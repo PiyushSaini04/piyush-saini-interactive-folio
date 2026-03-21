@@ -122,7 +122,7 @@ export const Hero = () => {
               {/* Image Container */}
               <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-[480px] lg:h-[480px] bg-[#16161a] rounded-[2.8rem] overflow-hidden border border-white/10">
                 <img 
-                  src="public/IMG20260120123304.jpg" 
+                  src="/IMG20260120123304.jpg" 
                   alt="Piyush Saini" 
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />

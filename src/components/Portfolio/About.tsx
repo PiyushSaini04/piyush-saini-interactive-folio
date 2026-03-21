@@ -83,7 +83,7 @@ export const About = () => {
                   <div className="relative w-full h-full rounded-full bg-gradient-to-tr from-blue-500 to-purple-600 p-1">
                     <div className="w-full h-full rounded-full bg-[#0a0a0c] flex items-center justify-center text-3xl font-bold bg-gradient-to-tr from-blue-400 to-purple-400 bg-clip-text text-transparent overflow-hidden">
                       <img 
-                      src="public/IMG_20260207_222453.jpg" 
+                      src="/IMG_20260207_222453.jpg" 
                       alt="" />
                     </div>
                   </div>
