@@ -64,7 +64,7 @@ const achievements = [
     description: "4+ years of consistent coding and project development",
     icon: Calendar,
     color: "from-pink-500 to-rose-600",
-    metric: "4+ Years"
+    metric: "2+ Years"
   }
 ];
 
@@ -129,7 +129,7 @@ export const Experience = () => {
               Career & Growth
             </h2>
             <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white to-slate-400">
-              Experience & Achievements
+              Extracurricular Activity
             </h1>
             <p className="max-w-2xl mx-auto text-slate-400 text-lg leading-relaxed">
               My professional journey and key accomplishments in technology, 
@@ -246,18 +246,7 @@ export const Experience = () => {
                   </motion.div>
                 ))}
 
-                {/* Resume Download CTA */}
-                <motion.button
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="mt-4 w-full py-4 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 font-bold text-white shadow-xl shadow-purple-500/20 flex items-center justify-center gap-2 group overflow-hidden relative"
-                >
-                  <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                  <span className="relative z-10 flex items-center gap-2">
-                    View Full Resume <ExternalLink className="w-4 h-4" />
-                  </span>
-                </motion.button>
+                
               </motion.div>
             </div>
 

@@ -8,7 +8,7 @@ const projects = [
     title: "Drone vs. Bird Detection",
     description:
       "AI-powered computer vision system using YOLO model to distinguish between drones and birds with high accuracy.",
-    image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=800&q=80",
+    image: "./project/dron.png", // Local asset path
     tags: ["YOLOv5", "Computer Vision", "Python", "AI/ML"],
     features: ["90%+ Accuracy", "Real-time Detection", "Edge Computing"],
     github: "https://github.com/piyush-saini/drone-detection",
@@ -20,7 +20,7 @@ const projects = [
     title: "Sign Language Detection",
     description:
       "Real-time sign language recognition system using MediaPipe and TensorFlow for inclusive communication.",
-    image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80",
+    image: "./project/sign.png",
     tags: ["MediaPipe", "TensorFlow", "OpenCV", "Python"],
     features: ["90% Accuracy", "20+ FPS", "Multi-language Support"],
     github: "https://github.com/piyush-saini/sign-language-detection",
@@ -32,13 +32,30 @@ const projects = [
     title: "Optimus Website",
     description:
       "A centralized event registration platform for university organizations, allowing students to explore and manage participation.",
-    image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&q=80", // Fallback for local asset
+    image: "./project/optimus.png", // Fallback for local asset
     tags: ["React.js", "Next.js", "Node.js", "TypeScript"],
     features: ["10+ Events Managed", "500+ participants", "Modern UI/UX"],
     github: "https://github.com/PiyushSaini04/optimus-event-flow",
     demo: "https://www.optimusorgz.xyz/",
     color: "from-purple-600 to-indigo-500",
   },
+  {
+  id: 3,
+  title: "AI Chatbot for Course & Job Recommendation",
+  description:
+    "Built an AI-powered chatbot that recommends the most suitable online courses and job opportunities based on user skills, interests, and current market trends.",
+  image: "./project/chatcot.png", // 👉 add your image here
+  tags: ["AI/ML", "Chatbot", "API", "Recommendation System", "React"],
+  features: [
+    "Fetches 50+ courses & jobs via API",
+    "AI-based ranking system",
+    "Top 3 personalized recommendations",
+    "Real-time interaction"
+  ],
+  github: "#", // 👉 add repo link if available
+  demo: "#",
+  color: "from-purple-600 to-indigo-500",
+}
 ];
 
 const ProjectModal = ({ project, onClose }) => {
@@ -148,24 +165,24 @@ export default function App() {
 
       
 
-    <section className="relative px-12 py-24 md:py-32">        
+    <section className="relative px-12  ">        
         {/* Header Section */}
 
         {/* Dynamic Background */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+      {/* <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-600/10 rounded-full blur-[120px]" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-purple-600/10 rounded-full blur-[120px]" />
-      </div>
+      </div> */}
 
-        <div className="mb-16 md:mb-24 space-y-4 max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-800 bg-zinc-900/50 text-xs font-medium text-zinc-400">
+        <div className="mb-16 md:mb-24 space-y-4 max-w-3xl text-center mx-auto">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-800 bg-zinc-900/50 text-xs font-medium text-zinc-400 text-center">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             Featured Projects
           </div>
           <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-white leading-tight">
             Crafting digital experiences with <span className="text-zinc-500">precision & purpose.</span>
           </h2>
-          <p className="text-lg text-zinc-400 max-w-xl">
+          <p className="text-lg text-zinc-400 ">
             A curated selection of technical projects ranging from computer vision to modern web architecture.
           </p>
         </div>

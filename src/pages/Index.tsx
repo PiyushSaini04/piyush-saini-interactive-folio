@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { Navigation } from "../components/Portfolio/Navigation";
 import { Hero } from "../components/Portfolio/Hero";
 import { About } from "../components/Portfolio/About";
-import { Skills } from "../components/Portfolio/Skills";
+import Skills from "../components/Portfolio/Skills";
 import ProjectsCarousel from "../components/Portfolio/Projects"; // updated import
 import { Experience } from "../components/Portfolio/Experience";
 import { Education } from "../components/Portfolio/Education";
 import Contacts from "../components/Portfolio/Contact";
 import { Footer } from "../components/Portfolio/Footer";
 import ProximityGraphAnimation from "@/components/Portfolio/ProximityGraphAnimation"; // import new animation
+import Training from "@/components/Portfolio/training";
 
 const Index = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -46,7 +47,8 @@ const Index = () => {
       <main className="z-10 h-auto border-b border-white">
         <Hero />
         <About />
-        <Skills />
+         {/* New Technical Skills Section */}
+        <Training /> {/* Added Training component */}
         <ProjectsCarousel /> {/* Updated here */}
         <Experience />
         <Education />

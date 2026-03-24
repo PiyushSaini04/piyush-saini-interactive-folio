@@ -1,6 +1,8 @@
 import React from 'react';
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, Download, ArrowRight } from "lucide-react";
+import { BookOpen, Terminal, Award, Star } from "lucide-react";
+
 
 /**
  * Hero Component
@@ -13,8 +15,15 @@ export const Hero = () => {
   };
 
   const downloadResume = () => {
-    window.open("/public/General CV Template (approved).pdf", "_blank");
+    window.open("/General CV Template (approved).pdf", "_blank");
   };
+
+   const stats = [
+    { label: "CGPA", value: 7.81, icon: <BookOpen className="w-4 h-4" /> },
+    { label: "DSA Problems", value: '200+' , icon: <Terminal className="w-4 h-4" /> },
+    { label: "Certificates", value: 6, icon: <Award className="w-4 h-4" /> },
+    
+  ];
 
   return (
     <section 
@@ -22,10 +31,10 @@ export const Hero = () => {
       className="relative min-h-screen flex items-center justify-center overflow-hidde text-white py-12 px-6"
     >
       {/* Dynamic Background */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+      {/* <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-600/10 rounded-full blur-[120px]" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-purple-600/10 rounded-full blur-[120px]" />
-      </div>
+      </div> */}
 
       <div className="container mx-auto max-w-7xl relative z-10">
         {/* Main Grid Container */}
@@ -100,6 +109,26 @@ export const Hero = () => {
                 </a>
               ))}
             </div>
+
+              <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
+
+              {stats.map((stat, idx) => (
+                <div key={idx} className="p-4 rounded-2xl hover:border-white/20 transition-colors group">
+                  <div className="text-4xl font-bold tabular-nums font-mono text-center lg:text-left">
+                    <h1>{stat.value}</h1>
+                    
+                  </div>
+                  <div className="flex items-center gap-2 text-blue-400 mb-1 justify-center lg:justify-start">
+                    
+                    <span className="text-[10px] uppercase tracking-widest font-bold text-gray-500 group-hover:text-blue-400 transition-colors">
+                      {stat.label}
+                    </span>
+                  </div>
+                </div>
+              ))}
+              </div>
+            
+
           </motion.div>
 
           {/* Column 2: Visual Content */}

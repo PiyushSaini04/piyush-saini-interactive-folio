@@ -43,10 +43,10 @@ export const About = () => {
       className="py-24 px-6 relative  overflow-hidden"
     >
       {/* Subtle Background Decoration */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+      {/* <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-600/10 rounded-full blur-[120px]" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-purple-600/10 rounded-full blur-[120px]" />
-      </div>
+      </div> */}
 
       <div className="container mx-auto max-w-7xl relative z-10">
         
@@ -145,9 +145,7 @@ export const About = () => {
             {/* High-Impact Stat Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
               {[
-                { label: "DSA Problems", value: "150+", icon: Award, color: "text-blue-400" },
-                { label: "Hackathons", value: "5+", icon: Code, color: "text-purple-400" },
-                { label: "Events Led", value: "300+", icon: Users, color: "text-pink-400" },
+                
               ].map((stat, i) => (
                 <div key={i} className="p-6 rounded-3xl bg-white/5 border border-white/10 text-center hover:border-white/20 transition-all group">
                   <stat.icon className={`w-6 h-6 mx-auto mb-3 ${stat.color} group-hover:scale-110 transition-transform`} />
@@ -160,13 +158,13 @@ export const About = () => {
         </div>
 
         {/* Hobbies / Interests Grid */}
-        <div className="space-y-12">
-          <div className="text-center">
+        {/* <div className="space-y-12"> */}
+          {/* <div className="text-center">
             <h4 className="text-2xl font-bold text-white">Beyond the Terminal</h4>
             <p className="text-gray-500 mt-2">Personal passions that drive my creativity</p>
-          </div>
+          </div> */}
 
-          <motion.div 
+          {/* <motion.div 
             variants={containerVariants}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
@@ -187,8 +185,57 @@ export const About = () => {
                 </p>
               </motion.div>
             ))}
-          </motion.div>
+          </motion.div>*/}
+       {/* </div>  */}
+
+         {/* ================= SKILLS SECTION (ADDED) ================= */}
+        <div className="mt-24">
+          <div className="text-center mb-12">
+            <h4 className="text-5xl font-bold text-white">Technical Skills</h4>
+            <p className="text-gray-500 mt-2">Technologies I work with</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
+              <h5 className="mb-4 text-blue-400">Frontend</h5>
+              <div className="flex flex-wrap gap-2">
+                {["HTML5","CSS3","React","Next.js","JavaScript","Tailwind"].map((s,i)=>(
+                  <span key={i} className="px-3 py-1 text-sm bg-white/10 rounded-full">{s}</span>
+                ))}
+              </div>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
+              <h5 className="mb-4 text-green-400">Backend</h5>
+              <div className="flex flex-wrap gap-2">
+                {["Node.js","Express","Python","C++"].map((s,i)=>(
+                  <span key={i} className="px-3 py-1 text-sm bg-white/10 rounded-full">{s}</span>
+                ))}
+              </div>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
+              <h5 className="mb-4 text-purple-400">Database</h5>
+              <div className="flex flex-wrap gap-2">
+                {["MongoDB","PostgreSQL","Redis"].map((s,i)=>(
+                  <span key={i} className="px-3 py-1 text-sm bg-white/10 rounded-full">{s}</span>
+                ))}
+              </div>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
+              <h5 className="mb-4 text-orange-400">DevOps</h5>
+              <div className="flex flex-wrap gap-2">
+                {["Docker","AWS/GCP","Git"].map((s,i)=>(
+                  <span key={i} className="px-3 py-1 text-sm bg-white/10 rounded-full">{s}</span>
+                ))}
+              </div>
+            </div>
+
+          </div>
         </div>
+        {/* ================= END SKILLS ================= */}
 
       </div>
     </section>
