@@ -40,7 +40,7 @@ const experiences = [
 const achievements = [
   {
     title: "LeetCode Problem Solver",
-    description: "Solved 150+ Data Structures and Algorithms problems",
+    description: "Solved 200+ Data Structures and Algorithms problems",
     icon: Code,
     color: "from-emerald-500 to-teal-600",
     metric: "150+ Solved"
@@ -213,7 +213,7 @@ export const Experience = () => {
             <div className="lg:col-span-5 space-y-8">
               <div className="flex items-center gap-3 mb-8">
                 <Award className="w-6 h-6 text-amber-400" />
-                <h3 className="text-2xl font-bold text-white">Milestones</h3>
+                <h3 className="text-2xl font-bold text-white">Coding platform</h3>
               </div>
 
               <motion.div 

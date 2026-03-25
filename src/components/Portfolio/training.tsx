@@ -27,7 +27,7 @@ export default function TrainingPage() {
             Learning
           </h2>
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            Training & Experience
+            Training 
           </h1>
           <p className="text-gray-400 max-w-2xl mx-auto">
             A journey of continuous learning through structured training and real-world problem solving.
