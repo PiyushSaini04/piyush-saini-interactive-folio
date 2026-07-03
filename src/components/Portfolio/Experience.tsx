@@ -1,6 +1,5 @@
-import React, { useRef, useMemo } from "react";
+import React, { useRef, useMemo, useState, useEffect } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
-import { Variants } from "framer-motion";
 import { 
   Users, 
   Code, 
@@ -92,6 +91,43 @@ const itemVariants = {
 export const Experience = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+
+  // Heatmap SVG state: try to inline the generated heatmap.svg from GitHub raw
+  const [svgMarkup, setSvgMarkup] = useState(null);
+  const [stats, setStats] = useState({ totalActiveDays: '-', currentStreak: '-', longestStreak: '-', totalSubmission: '-' });
+
+  useEffect(() => {
+    let cancelled = false;
+    async function fetchSvg() {
+      try {
+        const rawUrl = 'https://raw.githubusercontent.com/piyushsaini2004/piyush-saini-interactive-folio/main/heatmap.svg';
+        const resp = await fetch(rawUrl, { cache: 'no-cache' });
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const text = await resp.text();
+        if (cancelled) return;
+        setSvgMarkup(text);
+
+        // Parse basic stats placed in the SVG by the generator
+        const parse = (label) => {
+          const re = new RegExp(label + ":\\s*<tspan[^>]*>([^<]+)</tspan>", 'i');
+          const m = text.match(re);
+          return m ? m[1] : '-';
+        };
+
+        const totalActiveDays = parse('Active days') || '-';
+        const currentStreak = parse('Current streak') || '-';
+        const longestStreak = parse('Longest streak') || '-';
+        const totalSubmission = parse('Total submissions') || '-';
+
+        setStats({ totalActiveDays, currentStreak, longestStreak, totalSubmission });
+      } catch (e) {
+        // fail silently — keep showing the leetcard fallback
+        console.warn('[Experience] failed to fetch inline heatmap.svg:', e.message || e);
+      }
+    }
+    fetchSvg();
+    return () => { cancelled = true; };
+  }, []);
   
   // Dynamic Background Logic
   const { scrollYProgress } = useScroll({
@@ -249,6 +285,35 @@ export const Experience = () => {
                 
               </motion.div>
             </div>
+            <div className="mt-8 rounded-2xl bg-slate-900/60 border border-white/5 p-6">
+              <h3 className="text-xl font-bold text-white mb-4">LeetCode Activity</h3>
+
+              {svgMarkup ? (
+                <div className="w-full rounded-lg overflow-hidden" dangerouslySetInnerHTML={{ __html: svgMarkup }} />
+              ) : (
+                <img
+                  src={`https://leetcard.jacoblin.cool/piyushsaini2004?theme=dark&font=Karmap`}
+                  alt="LeetCode Heatmap"
+                  className="w-full rounded-lg"
+                />
+              )}
+
+              <div className="flex justify-between mt-4 text-sm text-slate-400">
+                <span>{stats.totalSubmission} Solved</span>
+                <span>{stats.totalActiveDays} Active Days</span>
+                <span>Max Streak: {stats.longestStreak}</span>
+              </div>
+
+              <a
+                href="https://leetcode.com/u/piyushsaini2004/"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center mt-4 text-purple-400 hover:text-purple-300"
+              >
+                View Profile
+                <ExternalLink className="w-4 h-4 ml-2" />
+              </a>
+          </div>
 
           </div>
         </div>
