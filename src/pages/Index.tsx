@@ -4,7 +4,7 @@ import { Hero } from "../components/Portfolio/Hero";
 import { About } from "../components/Portfolio/About";
 import Skills from "../components/Portfolio/Skills";
 import ProjectsCarousel from "../components/Portfolio/Projects"; // updated import
-import { Experience } from "../components/Portfolio/Experience";
+import Experience from "../components/Portfolio/Experience";
 import { Education } from "../components/Portfolio/Education";
 import Contacts from "../components/Portfolio/Contact";
 import { Footer } from "../components/Portfolio/Footer";
